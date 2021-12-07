@@ -10,4 +10,19 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="action_add">Add</string>
+    <string name="flat">Flat</string>
+    <string name="house">House</string>
+    <string name="duplex">Duplex</string>
+    <string name="loft">Loft</string>
+    <string name="manor">Manor</string>
+    <string name="land">Land</string>
+    <string name="to_sale">To sale</string>
+    <string name="sold">Sold</string>
+    <string name="status">Status</string>
+    <string name="location">Location</string>
+    <string name="describe">Describe</string>
+    <string name="rooms">Rooms</string>
+    <string name="surface">Surface Area (m²)</string>
+    <string name="price">Price ($)</string>
 </resources>

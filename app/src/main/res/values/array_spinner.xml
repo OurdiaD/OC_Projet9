@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="type_array">
+        <item>@string/flat</item>
+        <item>@string/house</item>
+        <item>@string/manor</item>
+        <item>@string/loft</item>
+        <item>@string/duplex</item>
+        <item>@string/land</item>
+    </string-array>
+    <string-array name="status_array">
+        <item>@string/to_sale</item>
+        <item>@string/sold</item>
+    </string-array>
+</resources>
