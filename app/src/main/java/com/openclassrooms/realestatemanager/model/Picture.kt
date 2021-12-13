@@ -5,7 +5,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class Picture {
+data class Picture(
+    @ColumnInfo(name = "idProperty") var idProperty: Long,
+    @ColumnInfo(name = "linkPic") var linkPic: String
+) {
     @PrimaryKey(autoGenerate = true) var idPicture: Int = 0
-    @ColumnInfo(name = "idProperty") var idProperty = 0
+
 }

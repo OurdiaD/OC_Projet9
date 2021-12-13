@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.ActivityAddBinding
+import com.openclassrooms.realestatemanager.model.Address
 import com.openclassrooms.realestatemanager.model.Property
 
 class AddActivity : AppCompatActivity()  {
@@ -44,14 +45,19 @@ class AddActivity : AppCompatActivity()  {
         val price  = Integer.parseInt(binding.pricePropertyEdit.text.toString())
         val surface = Integer.parseInt(binding.surfacePropertyEdit.text.toString())
         val rooms = Integer.parseInt(binding.roomsPropertyEdit.text.toString())
-        val location = binding.locationPropertyEdit.text.toString()
         val describe = binding.describePropertyEdit.text.toString()
+        val number = binding.addressNumberEdit.text.toString()
+        val street = binding.addressStreetEdit.text.toString()
+        val postalCode = binding.addressPostCodeEdit.text.toString()
+        val city = binding.addressCityEdit.text.toString()
+
+        val address = Address(number, street, city, postalCode)
 
         val newProperty = Property(type, status, surface)
         newProperty.price = price
         newProperty.numberOfRooms = rooms
-        newProperty.location = location
         newProperty.describe = describe
+        newProperty.address = address
 
         val repo = PropertyRepository(application)
         repo.addProperty(newProperty)

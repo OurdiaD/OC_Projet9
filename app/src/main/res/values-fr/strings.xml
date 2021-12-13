@@ -15,4 +15,8 @@
     <string name="rooms">Pieces</string>
     <string name="surface">Surface (m²)</string>
     <string name="price">Prix ($)</string>
+    <string name="number">Numéro</string>
+    <string name="street">Voie</string>
+    <string name="city">Commune</string>
+    <string name="postalCode">Code Postal</string>
 </resources>

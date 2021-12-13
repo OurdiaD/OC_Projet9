@@ -1,7 +1,7 @@
 package com.openclassrooms.realestatemanager.model
 
-import android.graphics.Picture
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
@@ -22,4 +22,6 @@ data class Property(
     @ColumnInfo(name = "dateSell") var dateSell: Long? = null
     @ColumnInfo(name = "agent") var agent: String? = null
     @ColumnInfo(name = "position") var position: String? = null
+    @Embedded
+    var address: Address? = null
 }

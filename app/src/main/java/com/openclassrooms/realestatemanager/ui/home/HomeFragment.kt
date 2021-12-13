@@ -27,28 +27,20 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         getList()
 
         return root
     }
 
     fun getList() {
+        val adapter = ListPropertyAdapter()
         val repo = context?.let { PropertyRepository(it) }
-        repo?.getAll()?.observe(viewLifecycleOwner, Observer {
-            for (property in it){
-                Log.d("lol home", property.location + "")
-            }
-            Log.d("lol home", Unit.toString())
+        repo?.getAll()?.observe(viewLifecycleOwner, {
+            adapter.properties = it
+            binding.listProperty.adapter = adapter
         })
     }
 
