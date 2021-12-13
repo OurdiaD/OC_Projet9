@@ -8,19 +8,18 @@ import java.util.*
 
 @Entity
 data class Property(
-    @ColumnInfo(name = "type") val type: String?,
-    @ColumnInfo(name = "price") val price: Int?,
-    @ColumnInfo(name = "surfaceArea") val surfaceArea: Float?) {
+    @ColumnInfo(name = "type") var type: Int?,
+    @ColumnInfo(name = "price") var price: Int?,
+    @ColumnInfo(name = "surfaceArea") var surfaceArea: Int?) {
 
-    @PrimaryKey(autoGenerate = true) val idProperty: Int = 0
-    @ColumnInfo(name = "numberOfRooms") val numberOfRooms = 0
-    @ColumnInfo(name = "describe") val describe: String? = null
-    @ColumnInfo(name = "pictures")  val pictures: List<Picture>? = null
-    @ColumnInfo(name = "location")  val location: String? = null
-    @ColumnInfo(name = "pointsOfInterest")  val pointsOfInterest: String? = null
-    @ColumnInfo(name = "status")  val status: String? = null
-    @ColumnInfo(name = "dateIn")  val dateIn: Date = Date()
-    @ColumnInfo(name = "dateSell") val dateSell: Date? = null
-    @ColumnInfo(name = "agent") val agent: String? = null
-    @ColumnInfo(name = "position") val position: String? = null
+    @PrimaryKey(autoGenerate = true) var idProperty: Long = 0
+    @ColumnInfo(name = "numberOfRooms") var numberOfRooms = 0
+    @ColumnInfo(name = "describe") var describe: String? = null
+    @ColumnInfo(name = "location")  var location: String? = null
+    @ColumnInfo(name = "pointsOfInterest")  var pointsOfInterest: String? = null
+    @ColumnInfo(name = "status")  var status: String? = null
+    @ColumnInfo(name = "dateIn")  var dateIn: Long = Date().time
+    @ColumnInfo(name = "dateSell") var dateSell: Long? = null
+    @ColumnInfo(name = "agent") var agent: String? = null
+    @ColumnInfo(name = "position") var position: String? = null
 }

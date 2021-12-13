@@ -22,4 +22,8 @@
     <style name="Theme.RealEstateManager.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.RealEstateManager.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="spinnerTheme" parent= "Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="strokeColor">@color/white</item>
+    </style>
 </resources>

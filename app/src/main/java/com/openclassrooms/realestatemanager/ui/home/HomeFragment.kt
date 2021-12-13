@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -35,7 +37,19 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+        getList()
+
         return root
+    }
+
+    fun getList() {
+        val repo = context?.let { PropertyRepository(it) }
+        repo?.getAll()?.observe(viewLifecycleOwner, Observer {
+            for (property in it){
+                Log.d("lol home", property.location + "")
+            }
+            Log.d("lol home", Unit.toString())
+        })
     }
 
     override fun onDestroyView() {
