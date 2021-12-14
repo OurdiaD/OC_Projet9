@@ -14,4 +14,7 @@ interface PropertyDao {
 
     @Insert
     fun insert(property: Property)
+
+    @Query("SELECT * FROM property where idProperty = :idProperty")
+    fun getOne(idProperty: Long): LiveData<Property>
 }

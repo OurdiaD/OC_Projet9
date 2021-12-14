@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.openclassrooms.realestatemanager.ui.home.HomeFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.listProperties.ListPropertiesFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_list_properties" />
 
     <fragment
         android:id="@+id/nav_gallery"

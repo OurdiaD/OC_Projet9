@@ -22,4 +22,8 @@ class PropertyRepository(context: Context) {
     fun getAll(): LiveData<List<Property>> {
         return propertyDao.getAll()
     }
+
+    fun getOne(idProperty: Long): LiveData<Property> {
+        return propertyDao.getOne(idProperty)
+    }
 }

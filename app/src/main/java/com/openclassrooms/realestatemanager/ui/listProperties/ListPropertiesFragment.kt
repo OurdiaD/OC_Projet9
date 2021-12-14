@@ -1,22 +1,18 @@
-package com.openclassrooms.realestatemanager.ui.home
+package com.openclassrooms.realestatemanager.ui.listProperties
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.database.PropertyRepository
-import com.openclassrooms.realestatemanager.databinding.FragmentHomeBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentListPropertiesBinding
 
-class HomeFragment : Fragment() {
+class ListPropertiesFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+    private lateinit var listPropertiesModel: ListPropertiesModel
+    private var _binding: FragmentListPropertiesBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -26,9 +22,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+    ): View {
+        listPropertiesModel = ViewModelProvider(this).get(ListPropertiesModel::class.java)
+        _binding = FragmentListPropertiesBinding.inflate(inflater, container, false)
         val root: View = binding.root
         getList()
 
@@ -36,7 +32,9 @@ class HomeFragment : Fragment() {
     }
 
     fun getList() {
-        val adapter = ListPropertyAdapter()
+
+        val adapter = ListPropertiesAdapter()
+        adapter.supportFragmentManager = activity?.supportFragmentManager
         val repo = context?.let { PropertyRepository(it) }
         repo?.getAll()?.observe(viewLifecycleOwner, {
             adapter.properties = it
