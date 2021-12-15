@@ -19,4 +19,6 @@
     <string name="street">Voie</string>
     <string name="city">Commune</string>
     <string name="postalCode">Code Postal</string>
+    <string name="takepic">Photo</string>
+    <string name="fromgallery">Galerie</string>
 </resources>

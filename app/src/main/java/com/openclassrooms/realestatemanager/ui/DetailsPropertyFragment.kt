@@ -10,6 +10,7 @@ import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailsPropertyBinding
 import com.openclassrooms.realestatemanager.databinding.FragmentListPropertiesBinding
 import com.openclassrooms.realestatemanager.ui.listProperties.ListPropertiesModel
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class DetailsPropertyFragment : Fragment() {
 
@@ -19,7 +20,7 @@ class DetailsPropertyFragment : Fragment() {
         //listPropertiesModel = ViewModelProvider(this).get(ListPropertiesModel::class.java)
         binding = FragmentDetailsPropertyBinding.inflate(inflater, container, false)
         val root: View = binding!!.root
-        //container?.removeAllViews()
+        container?.removeAllViews()
         getDetails()
         return root
     }
@@ -30,10 +31,16 @@ class DetailsPropertyFragment : Fragment() {
         val repo = context?.let { PropertyRepository(it) }
         if (id != null) {
             repo?.getOne(id)!!.observe(viewLifecycleOwner, {
-                binding?.detailsSurface?.text = it.surfaceArea.toString()
-                binding?.detailsPrice?.text = it.price.toString()
-                binding?.detailsDescribe?.text = it.describe.toString()
-                binding?.detailsRooms?.text = it.numberOfRooms.toString()
+                binding?.detailsSurface?.text = it.property.surfaceArea.toString()
+                binding?.detailsPrice?.text = it.property.price.toString()
+                binding?.detailsDescribe?.text = it.property.describe.toString()
+                binding?.detailsRooms?.text = it.property.numberOfRooms.toString()
+                binding?.carousel?.registerLifecycle(lifecycle)
+                val list = mutableListOf<CarouselItem>()
+                for (pic in it.pictures) {
+                    list.add(CarouselItem(imageUrl = pic.linkPic))
+                }
+                binding?.carousel?.setData(list)
             })
         }
     }

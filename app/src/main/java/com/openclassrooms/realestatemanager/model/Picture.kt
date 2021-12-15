@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Picture(
-    @ColumnInfo(name = "idProperty") var idProperty: Long,
+    @ColumnInfo(name = "propertyId") var propertyId: Long,
     @ColumnInfo(name = "linkPic") var linkPic: String
 ) {
     @PrimaryKey(autoGenerate = true) var idPicture: Int = 0

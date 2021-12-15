@@ -29,4 +29,6 @@
     <string name="street">Street</string>
     <string name="city">City</string>
     <string name="postalCode">Postal Code</string>
+    <string name="takepic">Picture</string>
+    <string name="fromgallery">Gallery</string>
 </resources>
