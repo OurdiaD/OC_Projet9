@@ -1,19 +1,16 @@
 package com.openclassrooms.realestatemanager.ui.listProperties
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.helper.widget.Carousel
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.model.Property
 import com.openclassrooms.realestatemanager.model.PropertyAndPictures
 import com.openclassrooms.realestatemanager.ui.DetailsPropertyFragment
 
@@ -41,9 +38,10 @@ class ListPropertiesAdapter : RecyclerView.Adapter<ListPropertiesAdapter.ListVie
         holder.type.text = context.resources.getStringArray(R.array.type_array)[property?.property?.type!!]
         holder.price.text = property.property.price.toString()
 
-        if (property.pictures.isNotEmpty())
-        /*holder.picture.setImageURI(Uri.parse(property.pictures[0].linkPic))*/
-        Glide.with(context).load(Uri.parse(property.pictures[0].linkPic)).into(holder.picture)
+        if (property.pictures.isNotEmpty()){
+            Glide.with(context).load(property.pictures[0].linkPic).into(holder.picture)
+        }
+
 
         if (supportFragmentManager != null) {
             holder.itemView.setOnClickListener {

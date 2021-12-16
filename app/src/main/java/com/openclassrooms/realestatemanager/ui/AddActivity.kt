@@ -2,10 +2,10 @@ package com.openclassrooms.realestatemanager.ui
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
-import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.R
@@ -13,14 +13,15 @@ import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.ActivityAddBinding
 import com.openclassrooms.realestatemanager.model.Address
 import com.openclassrooms.realestatemanager.model.Property
-import org.imaginativeworld.whynotimagecarousel.ImageCarousel
+import com.openclassrooms.realestatemanager.utils.CarouselUtils
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
+
 
 class AddActivity : AppCompatActivity()  {
 
     private lateinit var binding: ActivityAddBinding
     private val REQUEST_CODE = 100
-    private lateinit var carousel: ImageCarousel
+
     val listPic = mutableListOf<CarouselItem>()
     val listPicString = mutableListOf<String>()
 
@@ -28,17 +29,7 @@ class AddActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         binding = ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.addProperty.setOnClickListener {
-            saveData()
-            Log.d("lol add", "click")
-        }
-
-        binding.addPicGallery.setOnClickListener {
-            openGalleryForImage()
-        }
-
-        carousel()
+        initView()
     }
 
     private fun initSpinners() {
@@ -49,6 +40,20 @@ class AddActivity : AppCompatActivity()  {
         val statusAdapter = ArrayAdapter.createFromResource(this, R.array.status_array, R.layout.item_spiner)
         binding.statusPropertySpinner.setAdapter(statusAdapter)
         binding.statusPropertySpinner.setSelection(0)
+    }
+
+    fun initView() {
+        binding.addProperty.setOnClickListener {
+            saveData()
+            Log.d("lol add", "click")
+        }
+
+        binding.addPicGallery.setOnClickListener {
+            openGalleryForImage()
+        }
+
+        binding.carousel.registerLifecycle(lifecycle)
+        CarouselUtils().initCarousel(binding.carousel)
     }
 
     private fun saveData() {
@@ -84,26 +89,24 @@ class AddActivity : AppCompatActivity()  {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
-            //binding.gridPic.setImageURI(data?.data) // handle chosen image
-            listPic.add(CarouselItem(imageUrl = data?.data.toString()))
-            listPicString.add(data?.data.toString())
-
-            Log.d("lol add", "toString " + data?.data.toString())
-            Log.d("lol add", "path " + data?.data?.path)
-            Log.d("lol add", "encodedpath " + data?.data?.encodedPath)
-            Log.d("lol add", "encodedquery " + data?.data?.encodedQuery)
-            carousel.setData(listPic)
-            /*data?.data?.let {
-                *//*val inputStream = contentResolver.openInputStream(it)
-                val drawable = Drawable.createFromStream(inputStream, it.toString())
-                CarouselItem(imageDrawable = R.drawable.ic_add_photo)*//*
-                listPic.add(CarouselItem(imageUrl = it.path))
-            }*/
+            val path = data?.data?.let { getImageFilePath(it) }
+            listPic.add(CarouselItem(imageUrl = path))
+            path?.let { listPicString.add(it) }
+            binding.carousel.setData(listPic)
         }
     }
 
-    fun carousel() {
-        carousel = binding.carousel
-        carousel.registerLifecycle(lifecycle)
+    private fun getImageFilePath(uri: Uri): String {
+        var path = ""
+        if (contentResolver != null) {
+            val cursor = contentResolver.query(uri, null, null, null, null)
+            if (cursor != null) {
+                cursor.moveToFirst()
+                val idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+                path = cursor.getString(idx)
+                cursor.close()
+            }
+        }
+        return path
     }
 }

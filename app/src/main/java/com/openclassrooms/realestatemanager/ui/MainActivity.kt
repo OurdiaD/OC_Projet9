@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
+import android.content.pm.PackageManager
+
+import androidx.core.app.ActivityCompat
+
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        initPermission()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -78,6 +86,16 @@ class MainActivity : AppCompatActivity() {
             // If we got here, the user's action was not recognized.
             // Invoke the superclass to handle it.
             super.onOptionsItemSelected(item)
+        }
+    }
+
+    fun initPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                PackageManager.PERMISSION_GRANTED
+            )
         }
     }
 }
