@@ -21,9 +21,6 @@ import android.content.pm.PackageManager
 
 import androidx.core.app.ActivityCompat
 
-
-
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration

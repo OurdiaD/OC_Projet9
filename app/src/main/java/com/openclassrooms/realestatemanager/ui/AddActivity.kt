@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.ActivityAddBinding
@@ -15,6 +16,7 @@ import com.openclassrooms.realestatemanager.model.Address
 import com.openclassrooms.realestatemanager.model.Property
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
+import java.io.File
 
 
 class AddActivity : AppCompatActivity()  {
@@ -52,6 +54,10 @@ class AddActivity : AppCompatActivity()  {
             openGalleryForImage()
         }
 
+        binding.addPicture.setOnClickListener {
+            takePicture()
+        }
+
         binding.carousel.registerLifecycle(lifecycle)
         CarouselUtils().initCarousel(binding.carousel)
     }
@@ -86,14 +92,25 @@ class AddActivity : AppCompatActivity()  {
         startActivityForResult(intent, REQUEST_CODE)
     }
 
+    private fun takePicture() {
+        val f = File("${getExternalFilesDir(null)}/imgShot")
+        val photoURI = FileProvider.getUriForFile(this, "${packageName}.fileprovider", f)
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            .apply { putExtra(MediaStore.EXTRA_OUTPUT, photoURI) }
+        startActivityForResult(intent, 1234)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        lateinit var path: String
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
-            val path = data?.data?.let { getImageFilePath(it) }
-            listPic.add(CarouselItem(imageUrl = path))
-            path?.let { listPicString.add(it) }
-            binding.carousel.setData(listPic)
+            path = data?.data?.let { getImageFilePath(it) }.toString()
+        } else if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
+            path = File("${getExternalFilesDir(null)}/imgShot").toString()
         }
+        listPic.add(CarouselItem(imageUrl = path))
+        listPicString.add(path)
+        binding.carousel.setData(listPic)
     }
 
     private fun getImageFilePath(uri: Uri): String {

@@ -34,7 +34,7 @@ class ListPropertiesFragment : Fragment() {
     fun getList() {
 
         val adapter = ListPropertiesAdapter()
-        adapter.supportFragmentManager = activity?.supportFragmentManager
+        //adapter.supportFragmentManager = activity?.supportFragmentManager
         val repo = context?.let { PropertyRepository(it) }
         repo?.getAll()?.observe(viewLifecycleOwner, {
             adapter.properties = it

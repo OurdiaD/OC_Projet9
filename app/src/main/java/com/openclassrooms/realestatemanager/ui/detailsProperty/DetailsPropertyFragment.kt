@@ -1,24 +1,14 @@
-package com.openclassrooms.realestatemanager.ui
+package com.openclassrooms.realestatemanager.ui.detailsProperty
 
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.viewbinding.ViewBinding
-import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailsPropertyBinding
-import com.openclassrooms.realestatemanager.databinding.FragmentListPropertiesBinding
-import com.openclassrooms.realestatemanager.databinding.ItemCarouselCustomBinding
-import com.openclassrooms.realestatemanager.ui.listProperties.ListPropertiesModel
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
-import org.imaginativeworld.whynotimagecarousel.listener.CarouselListener
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
-import org.imaginativeworld.whynotimagecarousel.utils.setImage
 
 class DetailsPropertyFragment : Fragment() {
 
@@ -34,7 +24,7 @@ class DetailsPropertyFragment : Fragment() {
         return root
     }
 
-    fun getDetails(){
+    private fun getDetails(){
         val bundle = arguments
         val id = bundle?.getLong("id_property")
         val repo = context?.let { PropertyRepository(it) }
@@ -47,8 +37,6 @@ class DetailsPropertyFragment : Fragment() {
                 binding.carousel.registerLifecycle(lifecycle)
                 val list = mutableListOf<CarouselItem>()
                 for (pic in it.pictures) {
-                    Log.d("lol detail", pic.linkPic)
-                    Log.d("lol detail", "" + Uri.parse(pic.linkPic))
                     list.add(CarouselItem(imageUrl = pic.linkPic))
                 }
                 binding.carousel.setData(list)
