@@ -1,13 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.detailsProperty
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.ActivityDetailsBinding
+import com.openclassrooms.realestatemanager.ui.CommonActivity
 
-class DetailsPropertyActivity : AppCompatActivity() {
+class DetailsPropertyActivity : CommonActivity() {
     private lateinit var binding: ActivityDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

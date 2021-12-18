@@ -28,13 +28,13 @@
             android:name=".ui.AddActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.RealEstateManager.NoActionBar">
+            android:theme="@style/Theme.RealEstateManager">
         </activity>
         <activity
             android:name=".ui.detailsProperty.DetailsPropertyActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.RealEstateManager.NoActionBar">
+            android:theme="@style/Theme.RealEstateManager">
         </activity>
         <provider
             android:name="androidx.core.content.FileProvider"

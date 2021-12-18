@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.database.PropertyRepository
@@ -19,7 +18,7 @@ import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 import java.io.File
 
 
-class AddActivity : AppCompatActivity()  {
+class AddActivity : CommonActivity()  {
 
     private lateinit var binding: ActivityAddBinding
     private val REQUEST_CODE = 100
