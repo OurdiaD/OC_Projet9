@@ -14,6 +14,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.databinding.FragmentMapBinding
+import com.openclassrooms.realestatemanager.utils.Utils
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -44,10 +45,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
-        val geocoder = Geocoder(context)
+        //val geocoder = Geocoder(context)
         mapViewModel.getAllProperties().observe(viewLifecycleOwner, {
             for (property in it){
-                val address = property.address?.number + " " +
+                val location = Utils.getLocalisation(context, property.address)
+                if (location != null) {
+                    val loc = location.split(",")
+                    val latlng = LatLng(loc[0].toDouble(), loc[1].toDouble())
+                    map.addMarker(MarkerOptions().position(latlng).title(property.address.toString()))
+                }
+                /*val address = property.address?.number + " " +
                         property.address?.street + " " +
                         property.address?.postCode + " " +
                         property.address?.city
@@ -59,7 +66,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     val lng = pos.get(0).longitude
                     val mark = LatLng(lat, lng)
                     map.addMarker(MarkerOptions().position(mark).title(address))
-                }
+                }*/
             }
         })
 

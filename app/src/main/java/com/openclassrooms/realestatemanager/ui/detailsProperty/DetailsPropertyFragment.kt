@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailsPropertyBinding
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
+import com.openclassrooms.realestatemanager.utils.Utils
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class DetailsPropertyFragment : Fragment() {
@@ -40,6 +43,18 @@ class DetailsPropertyFragment : Fragment() {
                     list.add(CarouselItem(imageUrl = pic.linkPic))
                 }
                 binding.carousel.setData(list)
+
+                val latEiffelTower = "48.858235";
+                val lngEiffelTower = "2.294571";
+                val location = Utils.getLocalisation(context,it.property.address)
+                if (location != null) {
+                    // val url = "https://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&size=200x200&sensor=false&key=" + BuildConfig.API_KEY
+                    val url = "https://maps.googleapis.com/maps/api/staticmap?center="+location+
+                            "&zoom=15&size=300x300&maptype=roadmap&markers=color:red%7Clabel:C%7C" +location+
+                            "&key=" + BuildConfig.API_KEY
+                    Glide.with(requireContext()).load(url).into(binding.detailsMap)
+                }
+
             })
         }
     }

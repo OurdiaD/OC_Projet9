@@ -21,4 +21,5 @@
     <string name="postalCode">Code Postal</string>
     <string name="takepic">Photo</string>
     <string name="fromgallery">Galerie</string>
+    <string name="descmap">Position sur la carte</string>
 </resources>

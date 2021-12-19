@@ -31,4 +31,5 @@
     <string name="postalCode">Postal Code</string>
     <string name="takepic">Picture</string>
     <string name="fromgallery">Gallery</string>
+    <string name="descmap">Position on map</string>
 </resources>

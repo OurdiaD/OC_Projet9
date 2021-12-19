@@ -46,8 +46,8 @@ abstract class REMDatabase : RoomDatabase() {
        }
 
        fun populateData(): List<Property> {
-           val address1 = Address("5", "rue de l'eglise", "Orléan", "45000")
-           val address2 = Address("75", "rue de l'eglise", "Montpellier", "34000")
+           val address1 = Address("5", "Rue Xaintrailles", "Orléan", "45000")
+           val address2 = Address("22", "rue de l'eglise", "Montpellier", "34080")
 
            val property1= Property(3, 7500, 100)
            property1.status = 0
