@@ -22,7 +22,7 @@ class ListPropertiesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        listPropertiesModel = ViewModelProvider(this).get(ListPropertiesModel::class.java)
+        listPropertiesModel = ViewModelProvider(this)[ListPropertiesModel::class.java]
         _binding = FragmentListPropertiesBinding.inflate(inflater, container, false)
         val root: View = binding.root
         getList()
@@ -30,7 +30,7 @@ class ListPropertiesFragment : Fragment() {
         return root
     }
 
-    fun getList() {
+    private fun getList() {
 
         val adapter = ListPropertiesAdapter()
         //adapter.supportFragmentManager = activity?.supportFragmentManager

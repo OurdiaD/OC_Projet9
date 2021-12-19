@@ -19,7 +19,7 @@ class DetailsPropertyFragment : Fragment() {
     private lateinit var binding: FragmentDetailsPropertyBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        detailsViewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
+        detailsViewModel = ViewModelProvider(this)[DetailsViewModel::class.java]
         binding = FragmentDetailsPropertyBinding.inflate(inflater, container, false)
         val root: View = binding.root
         container?.removeAllViews()
@@ -44,17 +44,13 @@ class DetailsPropertyFragment : Fragment() {
                 }
                 binding.carousel.setData(list)
 
-                val latEiffelTower = "48.858235";
-                val lngEiffelTower = "2.294571";
                 val location = Utils.getLocalisation(context,it.property.address)
                 if (location != null) {
-                    // val url = "https://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&size=200x200&sensor=false&key=" + BuildConfig.API_KEY
                     val url = "https://maps.googleapis.com/maps/api/staticmap?center="+location+
                             "&zoom=15&size=300x300&maptype=roadmap&markers=color:red%7Clabel:C%7C" +location+
                             "&key=" + BuildConfig.API_KEY
                     Glide.with(requireContext()).load(url).into(binding.detailsMap)
                 }
-
             })
         }
     }

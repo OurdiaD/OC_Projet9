@@ -8,7 +8,7 @@ import com.openclassrooms.realestatemanager.model.PropertyAndPictures
 
 class ListPropertiesModel(application: Application) : AndroidViewModel(application) {
 
-    val propertyRepository: PropertyRepository = PropertyRepository(application)
+    private val propertyRepository: PropertyRepository = PropertyRepository(application)
 
 
     fun getAllProperties(): LiveData<List<PropertyAndPictures>> {

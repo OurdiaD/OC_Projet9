@@ -1,17 +1,15 @@
 package com.openclassrooms.realestatemanager.database
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.openclassrooms.realestatemanager.database.REMDatabase
 import com.openclassrooms.realestatemanager.model.Picture
 import com.openclassrooms.realestatemanager.model.Property
 import com.openclassrooms.realestatemanager.model.PropertyAndPictures
 import java.util.concurrent.Executors
 
 class PropertyRepository(context: Context) {
-    var propertyDao: PropertyDao
-    var pictureDao: PictureDao
+    private var propertyDao: PropertyDao
+    private var pictureDao: PictureDao
 
     init {
         val db: REMDatabase = REMDatabase.getInstance(context)!!

@@ -1,13 +1,11 @@
 package com.openclassrooms.realestatemanager.ui.map
 
-import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -29,13 +27,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        mapViewModel = ViewModelProvider(this).get(MapViewModel::class.java)
+    ): View {
+        mapViewModel = ViewModelProvider(this)[MapViewModel::class.java]
         _binding = FragmentMapBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as SupportMapFragment?
-        mapFragment?.getMapAsync(this);
+        mapFragment?.getMapAsync(this)
         return root
     }
 
@@ -54,19 +52,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     val latlng = LatLng(loc[0].toDouble(), loc[1].toDouble())
                     map.addMarker(MarkerOptions().position(latlng).title(property.address.toString()))
                 }
-                /*val address = property.address?.number + " " +
-                        property.address?.street + " " +
-                        property.address?.postCode + " " +
-                        property.address?.city
-
-                val pos = geocoder.getFromLocationName(address, 1)
-
-                if(pos.size > 0) {
-                    val lat = pos.get(0).latitude
-                    val lng = pos.get(0).longitude
-                    val mark = LatLng(lat, lng)
-                    map.addMarker(MarkerOptions().position(mark).title(address))
-                }*/
             }
         })
 

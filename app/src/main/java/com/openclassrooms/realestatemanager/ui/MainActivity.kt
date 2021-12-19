@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun initPermission() {
+    private fun initPermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                 this,

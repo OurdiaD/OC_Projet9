@@ -18,7 +18,7 @@ class CarouselUtils {
             override fun onCreateViewHolder(
                 layoutInflater: LayoutInflater,
                 parent: ViewGroup
-            ): ViewBinding? {
+            ): ViewBinding {
                 return ItemCarouselCustomBinding.inflate(layoutInflater, parent, false)
             }
 

@@ -6,9 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.ArrayAdapter
 import androidx.core.content.FileProvider
-import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.ActivityAddBinding
 import com.openclassrooms.realestatemanager.model.Address
@@ -23,8 +21,8 @@ class AddActivity : CommonActivity()  {
     private lateinit var binding: ActivityAddBinding
     private val REQUEST_CODE = 100
 
-    val listPic = mutableListOf<CarouselItem>()
-    val listPicString = mutableListOf<String>()
+    private val listPic = mutableListOf<CarouselItem>()
+    private val listPicString = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,17 +31,7 @@ class AddActivity : CommonActivity()  {
         initView()
     }
 
-    private fun initSpinners() {
-        val typeAdapter = ArrayAdapter.createFromResource(this, R.array.type_array, R.layout.item_spiner)
-        binding.typePropertySpinner.setAdapter(typeAdapter)
-        binding.typePropertySpinner.setSelection(0)
-
-        val statusAdapter = ArrayAdapter.createFromResource(this, R.array.status_array, R.layout.item_spiner)
-        binding.statusPropertySpinner.setAdapter(statusAdapter)
-        binding.statusPropertySpinner.setSelection(0)
-    }
-
-    fun initView() {
+    private fun initView() {
         binding.addProperty.setOnClickListener {
             saveData()
             Log.d("lol add", "click")

@@ -21,8 +21,8 @@ public class Utils {
     /**
      * Conversion d'un prix d'un bien immobilier (Dollars vers Euros)
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
-     * @param dollars
-     * @return
+     * @param dollars int
+     * @return euros int
      */
     public static int convertDollarToEuro(int dollars){
         return (int) Math.round(dollars * 0.812);
@@ -35,7 +35,7 @@ public class Utils {
     /**
      * Conversion de la date d'aujourd'hui en un format plus approprié
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
-     * @return
+     * @return date string
      */
     public static String getTodayDate(){
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -45,11 +45,11 @@ public class Utils {
     /**
      * Vérification de la connexion réseau
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
-     * @param context
-     * @return
+     * @param context Context
+     * @return boolean
      */
     public static Boolean isInternetAvailable(Context context){
-        WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifi = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         return wifi.isWifiEnabled();
     }
 
@@ -64,24 +64,5 @@ public class Utils {
             return pos.get(0).getLatitude() + "," + pos.get(0).getLongitude();
         else
             return null;
-
-        /*val geocoder = Geocoder(context)
-        mapViewModel.getAllProperties().observe(viewLifecycleOwner, {
-        for (property in it){
-            val address = property.address?.number + " " +
-                    property.address?.street + " " +
-                    property.address?.postCode + " " +
-                    property.address?.city
-
-            val pos = geocoder.getFromLocationName(address, 1)
-
-            if(pos.size > 0) {
-                val lat = pos.get(0).latitude
-                val lng = pos.get(0).longitude
-                val mark = LatLng(lat, lng)
-                map.addMarker(MarkerOptions().position(mark).title(address))
-            }
-        }
-        })*/
     }
 }

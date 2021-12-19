@@ -2,10 +2,8 @@ package com.openclassrooms.realestatemanager.ui
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.openclassrooms.realestatemanager.R
 
 open class CommonActivity : AppCompatActivity(){
 
