@@ -13,7 +13,10 @@ interface PropertyDao {
 
     @Transaction
     @Query("SELECT * FROM property")
-    fun getAll(): LiveData<List<PropertyAndPictures>>
+    fun getAllWithPictures(): LiveData<List<PropertyAndPictures>>
+
+    @Query("SELECT * FROM property")
+    fun getAll(): LiveData<List<Property>>
 
     @Insert
     fun insert(property: Property): Long

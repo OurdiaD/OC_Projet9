@@ -5,17 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.openclassrooms.realestatemanager.database.PropertyRepository
+import androidx.lifecycle.ViewModelProvider
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailsPropertyBinding
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class DetailsPropertyFragment : Fragment() {
 
+    private lateinit var detailsViewModel: DetailsViewModel
     private lateinit var binding: FragmentDetailsPropertyBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        //listPropertiesModel = ViewModelProvider(this).get(ListPropertiesModel::class.java)
+        detailsViewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
         binding = FragmentDetailsPropertyBinding.inflate(inflater, container, false)
         val root: View = binding.root
         container?.removeAllViews()
@@ -27,9 +28,8 @@ class DetailsPropertyFragment : Fragment() {
     private fun getDetails(){
         val bundle = arguments
         val id = bundle?.getLong("id_property")
-        val repo = context?.let { PropertyRepository(it) }
         if (id != null) {
-            repo?.getOne(id)!!.observe(viewLifecycleOwner, {
+            detailsViewModel.getOneProperty(id).observe(viewLifecycleOwner, {
                 binding.detailsSurface.text = it.property.surfaceArea.toString()
                 binding.detailsPrice.text = it.property.price.toString()
                 binding.detailsDescribe.text = it.property.describe.toString()

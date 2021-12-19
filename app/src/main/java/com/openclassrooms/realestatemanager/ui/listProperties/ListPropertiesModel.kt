@@ -1,15 +1,17 @@
 package com.openclassrooms.realestatemanager.ui.listProperties
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.openclassrooms.realestatemanager.database.PropertyRepository
+import com.openclassrooms.realestatemanager.model.PropertyAndPictures
 
-class ListPropertiesModel : ViewModel() {
+class ListPropertiesModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    val propertyRepository: PropertyRepository = PropertyRepository(application)
+
+
+    fun getAllProperties(): LiveData<List<PropertyAndPictures>> {
+        return propertyRepository.getAllWithPictures()
     }
-    val text: LiveData<String> = _text
-
-
 }

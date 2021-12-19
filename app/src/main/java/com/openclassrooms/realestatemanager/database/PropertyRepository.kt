@@ -28,8 +28,12 @@ class PropertyRepository(context: Context) {
         }
     }
 
-    fun getAll(): LiveData<List<PropertyAndPictures>> {
+    fun getAll(): LiveData<List<Property>> {
         return propertyDao.getAll()
+    }
+
+    fun getAllWithPictures(): LiveData<List<PropertyAndPictures>> {
+        return propertyDao.getAllWithPictures()
     }
 
     fun getOne(idProperty: Long): LiveData<PropertyAndPictures> {

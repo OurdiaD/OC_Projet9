@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.FragmentListPropertiesBinding
 
 class ListPropertiesFragment : Fragment() {
@@ -35,8 +34,8 @@ class ListPropertiesFragment : Fragment() {
 
         val adapter = ListPropertiesAdapter()
         //adapter.supportFragmentManager = activity?.supportFragmentManager
-        val repo = context?.let { PropertyRepository(it) }
-        repo?.getAll()?.observe(viewLifecycleOwner, {
+        //val repo = context?.let { PropertyRepository(it) }
+        listPropertiesModel.getAllProperties().observe(viewLifecycleOwner, {
             adapter.properties = it
             binding.listProperty.adapter = adapter
         })
