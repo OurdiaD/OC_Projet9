@@ -32,4 +32,5 @@
     <string name="takepic">Picture</string>
     <string name="fromgallery">Gallery</string>
     <string name="descmap">Position on map</string>
+    <string name="action_edit">Edit</string>
 </resources>

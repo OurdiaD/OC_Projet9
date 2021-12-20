@@ -22,4 +22,5 @@
     <string name="takepic">Photo</string>
     <string name="fromgallery">Galerie</string>
     <string name="descmap">Position sur la carte</string>
+    <string name="action_edit">Modifier</string>
 </resources>

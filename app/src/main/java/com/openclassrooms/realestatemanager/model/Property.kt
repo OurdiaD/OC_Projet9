@@ -8,9 +8,9 @@ import java.util.*
 
 @Entity
 data class Property(
-    @ColumnInfo(name = "type") var type: Int?,
-    @ColumnInfo(name = "price") var price: Int?,
-    @ColumnInfo(name = "surfaceArea") var surfaceArea: Int?) {
+    @ColumnInfo(name = "type") var type: Int? = 0,
+    @ColumnInfo(name = "price") var price: Int? = 0,
+    @ColumnInfo(name = "surfaceArea") var surfaceArea: Int? = 0) {
 
     @PrimaryKey(autoGenerate = true) var idProperty: Long = 0
     @ColumnInfo(name = "numberOfRooms") var numberOfRooms = 0

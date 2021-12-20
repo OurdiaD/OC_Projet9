@@ -1,5 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.map
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +15,21 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.databinding.FragmentMapBinding
 import com.openclassrooms.realestatemanager.utils.Utils
+import android.content.pm.PackageManager
+
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.CameraPosition
+
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
+    private lateinit var mapFragment: SupportMapFragment
     private lateinit var mapViewModel: MapViewModel
     private var _binding: FragmentMapBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var mMap: GoogleMap
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,9 +40,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as SupportMapFragment?
-        mapFragment?.getMapAsync(this)
+        mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as SupportMapFragment
+        mapFragment.getMapAsync(this)
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (hasPermissions())
+            getCurrentLocation()
     }
 
     override fun onDestroyView() {
@@ -43,18 +57,54 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
-        //val geocoder = Geocoder(context)
+        mMap = map
         mapViewModel.getAllProperties().observe(viewLifecycleOwner, {
             for (property in it){
                 val location = Utils.getLocalisation(context, property.address)
                 if (location != null) {
                     val loc = location.split(",")
                     val latlng = LatLng(loc[0].toDouble(), loc[1].toDouble())
-                    map.addMarker(MarkerOptions().position(latlng).title(property.address.toString()))
+                    map.addMarker(MarkerOptions().position(latlng).title(Utils.getAddressToString(property.address)))
                 }
             }
         })
+    }
 
-        //map.moveCamera(CameraUpdateFactory.newLatLng(mark))
+    @SuppressLint("MissingPermission")
+    private fun getCurrentLocation() {
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        mMap.isMyLocationEnabled = true
+        val locationResult = fusedLocationClient.lastLocation
+        locationResult.addOnCompleteListener(requireActivity()) {
+            if (it.isSuccessful) {
+                val current = LatLng(it.result.latitude, it.result.longitude)
+                val myPosition = CameraPosition.Builder()
+                    .target(current).zoom(8f).bearing(90f).tilt(30f).build()
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(myPosition))
+            }
+        }
+    }
+
+    private fun hasPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                PackageManager.PERMISSION_GRANTED
+            )
+            return false
+        } else {
+            return true
+        }
     }
 }

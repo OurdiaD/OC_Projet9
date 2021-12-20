@@ -42,6 +42,11 @@ public class Utils {
         return dateFormat.format(new Date());
     }
 
+    public static String getTodayDatewHour(){
+        DateFormat dateFormat = new SimpleDateFormat("ddMMyyyykkmmss");
+        return dateFormat.format(new Date());
+    }
+
     /**
      * Vérification de la connexion réseau
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
@@ -55,14 +60,19 @@ public class Utils {
 
     public static String getLocalisation(Context context, Address address) throws IOException {
         Geocoder geocoder = new Geocoder(context);
-        String addressString = address.getNumber() +  " " +
-                address.getStreet() + " " +
-                address.getPostCode() + " " +
-                address.getCity();
+        String addressString = getAddressToString(address);
         List<android.location.Address> pos = geocoder.getFromLocationName(addressString, 1);
         if(pos.size() > 0)
             return pos.get(0).getLatitude() + "," + pos.get(0).getLongitude();
         else
             return null;
+    }
+
+    public static String getAddressToString(Address address) {
+        return address.getNumber() +  " " +
+                address.getStreet() + " " +
+                address.getPostCode() + " " +
+                address.getCity();
+
     }
 }

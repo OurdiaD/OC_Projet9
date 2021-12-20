@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.database
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.openclassrooms.realestatemanager.model.Picture
 import com.openclassrooms.realestatemanager.model.Property
@@ -36,5 +37,14 @@ class PropertyRepository(context: Context) {
 
     fun getOne(idProperty: Long): LiveData<PropertyAndPictures> {
         return propertyDao.getOne(idProperty)
+    }
+
+    fun updateProperty(property: Property, pictures: List<String>) {
+        Executors.newSingleThreadExecutor().execute {
+            propertyDao.update(property)
+            for (pic in pictures){
+                pictureDao.insertPic(Picture(property.idProperty, pic))
+            }
+        }
     }
 }

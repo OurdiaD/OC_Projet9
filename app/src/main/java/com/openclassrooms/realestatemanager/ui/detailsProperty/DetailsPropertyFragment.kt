@@ -1,14 +1,16 @@
 package com.openclassrooms.realestatemanager.ui.detailsProperty
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.BuildConfig
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailsPropertyBinding
+import com.openclassrooms.realestatemanager.ui.AddActivity
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
 import com.openclassrooms.realestatemanager.utils.Utils
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
@@ -17,6 +19,7 @@ class DetailsPropertyFragment : Fragment() {
 
     private lateinit var detailsViewModel: DetailsViewModel
     private lateinit var binding: FragmentDetailsPropertyBinding
+    private var idProperty: Long? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         detailsViewModel = ViewModelProvider(this)[DetailsViewModel::class.java]
@@ -25,14 +28,15 @@ class DetailsPropertyFragment : Fragment() {
         container?.removeAllViews()
         CarouselUtils().initCarousel(binding.carousel)
         getDetails()
+        setHasOptionsMenu(true)
         return root
     }
 
     private fun getDetails(){
         val bundle = arguments
-        val id = bundle?.getLong("id_property")
-        if (id != null) {
-            detailsViewModel.getOneProperty(id).observe(viewLifecycleOwner, {
+        idProperty = bundle?.getLong("id_property")
+        if (idProperty != null) {
+            detailsViewModel.getOneProperty(idProperty!!).observe(viewLifecycleOwner, {
                 binding.detailsSurface.text = it.property.surfaceArea.toString()
                 binding.detailsPrice.text = it.property.price.toString()
                 binding.detailsDescribe.text = it.property.describe.toString()
@@ -50,8 +54,23 @@ class DetailsPropertyFragment : Fragment() {
                             "&zoom=15&size=300x300&maptype=roadmap&markers=color:red%7Clabel:C%7C" +location+
                             "&key=" + BuildConfig.API_KEY
                     Glide.with(requireContext()).load(url).into(binding.detailsMap)
+
                 }
             })
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_edit, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_edit) {
+            val intent = Intent(context, AddActivity::class.java)
+            intent.putExtra("id_property", idProperty)
+            ContextCompat.startActivity(requireContext(), intent, null)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

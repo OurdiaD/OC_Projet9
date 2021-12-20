@@ -1,10 +1,7 @@
 package com.openclassrooms.realestatemanager.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import com.openclassrooms.realestatemanager.model.Property
 import com.openclassrooms.realestatemanager.model.PropertyAndPictures
 
@@ -27,4 +24,7 @@ interface PropertyDao {
     @Transaction
     @Query("SELECT * FROM property where idProperty = :idProperty")
     fun getOne(idProperty: Long): LiveData<PropertyAndPictures>
+
+    @Update
+    fun update(vararg property: Property)
 }

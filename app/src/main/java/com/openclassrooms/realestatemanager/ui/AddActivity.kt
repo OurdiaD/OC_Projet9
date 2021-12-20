@@ -7,33 +7,42 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import androidx.core.content.FileProvider
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.ActivityAddBinding
 import com.openclassrooms.realestatemanager.model.Address
 import com.openclassrooms.realestatemanager.model.Property
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
+import com.openclassrooms.realestatemanager.utils.Utils
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 import java.io.File
 
 
 class AddActivity : CommonActivity()  {
 
+    private var idProperty: Long? = null
+    private var currentProperty: Property? = null
     private lateinit var binding: ActivityAddBinding
     private val REQUEST_CODE = 100
 
     private val listPic = mutableListOf<CarouselItem>()
     private val listPicString = mutableListOf<String>()
+    private var datePic: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
+        idProperty = intent.extras?.getLong("id_property")
+        if(idProperty != null)
+            initData()
     }
 
     private fun initView() {
         binding.addProperty.setOnClickListener {
             saveData()
+            finish()
             Log.d("lol add", "click")
         }
 
@@ -47,6 +56,34 @@ class AddActivity : CommonActivity()  {
 
         binding.carousel.registerLifecycle(lifecycle)
         CarouselUtils().initCarousel(binding.carousel)
+    }
+
+    private fun initData() {
+        binding.addProperty.setText(R.string.action_edit)
+        val repo = PropertyRepository(application)
+        val item = idProperty?.let { repo.getOne(it) }
+        item?.observe(this) {
+            currentProperty = it.property
+            binding.typePropertySpinner.setSelection(it.property.type!!)
+            binding.statusPropertySpinner.setSelection(it.property.status!!)
+            binding.pricePropertyEdit.setText(it.property.price.toString())
+            binding.surfacePropertyEdit.setText(it.property.surfaceArea.toString())
+            binding.roomsPropertyEdit.setText(it.property.numberOfRooms.toString())
+            binding.describePropertyEdit.setText(it.property.describe.toString())
+            binding.addressNumberEdit.setText(it.property.address?.number.toString())
+            binding.addressStreetEdit.setText(it.property.address?.street.toString())
+            binding.addressPostCodeEdit.setText(it.property.address?.postCode.toString())
+            binding.addressCityEdit.setText(it.property.address?.city.toString())
+
+
+            binding.carousel.registerLifecycle(lifecycle)
+            for (pic in it.pictures) {
+                listPic.add(CarouselItem(imageUrl = pic.linkPic))
+                listPicString.add(pic.linkPic)
+            }
+            binding.carousel.setData(listPic)
+        }
+
     }
 
     private fun saveData() {
@@ -63,14 +100,25 @@ class AddActivity : CommonActivity()  {
 
         val address = Address(number, street, city, postalCode)
 
-        val newProperty = Property(type, price, surface)
-        newProperty.status = status
-        newProperty.numberOfRooms = rooms
-        newProperty.describe = describe
-        newProperty.address = address
+        var property = currentProperty
+        if (property == null) {
+             property = Property()
+        }
+
+        property.type = type
+        property.price = price
+        property.surfaceArea = surface
+        property.status = status
+        property.numberOfRooms = rooms
+        property.describe = describe
+        property.address = address
 
         val repo = PropertyRepository(application)
-        repo.addProperty(newProperty, listPicString)
+        if (idProperty == null) {
+            repo.addProperty(property, listPicString)
+        } else {
+            repo.updateProperty(property, listPicString)
+        }
     }
 
     private fun openGalleryForImage() {
@@ -80,11 +128,12 @@ class AddActivity : CommonActivity()  {
     }
 
     private fun takePicture() {
-        val f = File("${getExternalFilesDir(null)}/imgShot")
+        datePic = Utils.getTodayDatewHour()
+        val f = File("${getExternalFilesDir(null)}/imgShot"+datePic)
         val photoURI = FileProvider.getUriForFile(this, "${packageName}.fileprovider", f)
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             .apply { putExtra(MediaStore.EXTRA_OUTPUT, photoURI) }
-        startActivityForResult(intent, 1234)
+        startActivityForResult(intent, 101)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -92,8 +141,8 @@ class AddActivity : CommonActivity()  {
         lateinit var path: String
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
             path = data?.data?.let { getImageFilePath(it) }.toString()
-        } else if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
-            path = File("${getExternalFilesDir(null)}/imgShot").toString()
+        } else if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+            path = File("${getExternalFilesDir(null)}/imgShot"+datePic).toString()
         }
         listPic.add(CarouselItem(imageUrl = path))
         listPicString.add(path)
