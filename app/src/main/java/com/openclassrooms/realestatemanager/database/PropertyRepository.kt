@@ -47,4 +47,10 @@ class PropertyRepository(context: Context) {
             }
         }
     }
+
+    fun deletePicture(id: Long, path: String){
+        Executors.newSingleThreadExecutor().execute {
+            pictureDao.deletePic(id, path)
+        }
+    }
 }

@@ -6,20 +6,26 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Display
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProvider
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.ActivityAddBinding
 import com.openclassrooms.realestatemanager.model.Address
 import com.openclassrooms.realestatemanager.model.Property
+import com.openclassrooms.realestatemanager.ui.editProperty.EditViewModel
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
 import com.openclassrooms.realestatemanager.utils.Utils
+import org.imaginativeworld.whynotimagecarousel.listener.CarouselListener
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
+import org.imaginativeworld.whynotimagecarousel.model.CarouselType
 import java.io.File
 
 
 class AddActivity : CommonActivity()  {
 
+    private lateinit var editViewModel: EditViewModel
     private var idProperty: Long? = null
     private var currentProperty: Property? = null
     private lateinit var binding: ActivityAddBinding
@@ -28,11 +34,13 @@ class AddActivity : CommonActivity()  {
     private val listPic = mutableListOf<CarouselItem>()
     private val listPicString = mutableListOf<String>()
     private var datePic: String? = null
+    var fullscreen: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        editViewModel = ViewModelProvider(this)[EditViewModel::class.java]
         initView()
         idProperty = intent.extras?.getLong("id_property")
         if(idProperty != null)
@@ -55,13 +63,13 @@ class AddActivity : CommonActivity()  {
         }
 
         binding.carousel.registerLifecycle(lifecycle)
-        CarouselUtils().initCarousel(binding.carousel)
+        CarouselUtils().initCarousel(binding.carousel, this)
+        listnerCarousel()
     }
 
     private fun initData() {
         binding.addProperty.setText(R.string.action_edit)
-        val repo = PropertyRepository(application)
-        val item = idProperty?.let { repo.getOne(it) }
+        val item = idProperty?.let { editViewModel.getOneProperty(it) }
         item?.observe(this) {
             currentProperty = it.property
             binding.typePropertySpinner.setSelection(it.property.type!!)
@@ -75,8 +83,6 @@ class AddActivity : CommonActivity()  {
             binding.addressPostCodeEdit.setText(it.property.address?.postCode.toString())
             binding.addressCityEdit.setText(it.property.address?.city.toString())
 
-
-            binding.carousel.registerLifecycle(lifecycle)
             for (pic in it.pictures) {
                 listPic.add(CarouselItem(imageUrl = pic.linkPic))
                 listPicString.add(pic.linkPic)
@@ -113,11 +119,10 @@ class AddActivity : CommonActivity()  {
         property.describe = describe
         property.address = address
 
-        val repo = PropertyRepository(application)
         if (idProperty == null) {
-            repo.addProperty(property, listPicString)
+            editViewModel.addProperty(property, listPicString)
         } else {
-            repo.updateProperty(property, listPicString)
+            editViewModel.updateProperty(property, listPicString)
         }
     }
 
@@ -161,5 +166,37 @@ class AddActivity : CommonActivity()  {
             }
         }
         return path
+    }
+
+    fun listnerCarousel() {
+        binding.carousel.carouselListener = object  : CarouselListener {
+            /*override fun onClick(position: Int, carouselItem: CarouselItem) {
+                super.onClick(position, carouselItem)
+                Log.d("lol add", "click")
+                if(fullscreen) {
+                    binding.carousel.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, 400)
+                    binding.carousel.carouselType = CarouselType.SHOWCASE
+                    fullscreen = false
+                } else {
+                    val mDisplay: Display = windowManager.defaultDisplay
+                    val width: Int = mDisplay.width
+                    val height: Int = mDisplay.height
+                    binding.carousel.layoutParams = ConstraintLayout.LayoutParams(width, height)
+                    fullscreen = true
+                }
+
+            }*/
+
+            override fun onLongClick(position: Int, carouselItem: CarouselItem) {
+                super.onLongClick(position, carouselItem)
+                Log.d("lol add", "longclick")
+                listPic.remove(carouselItem)
+                listPicString.remove(carouselItem.imageUrl)
+                if (idProperty != null){
+                    editViewModel.deletePicture(idProperty!!, carouselItem.imageUrl.toString())
+                }
+                binding.carousel.setData(listPic)
+            }
+        }
     }
 }

@@ -2,7 +2,9 @@ package com.openclassrooms.realestatemanager.ui.detailsProperty
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +15,7 @@ import com.openclassrooms.realestatemanager.databinding.FragmentDetailsPropertyB
 import com.openclassrooms.realestatemanager.ui.AddActivity
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
 import com.openclassrooms.realestatemanager.utils.Utils
+import org.imaginativeworld.whynotimagecarousel.listener.CarouselListener
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class DetailsPropertyFragment : Fragment() {
@@ -20,13 +23,14 @@ class DetailsPropertyFragment : Fragment() {
     private lateinit var detailsViewModel: DetailsViewModel
     private lateinit var binding: FragmentDetailsPropertyBinding
     private var idProperty: Long? = null
+    var fullscreen: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         detailsViewModel = ViewModelProvider(this)[DetailsViewModel::class.java]
         binding = FragmentDetailsPropertyBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        container?.removeAllViews()
-        CarouselUtils().initCarousel(binding.carousel)
+        CarouselUtils().initCarousel(binding.carousel, activity)
+        //listnerCarousel()
         getDetails()
         setHasOptionsMenu(true)
         return root
@@ -57,6 +61,25 @@ class DetailsPropertyFragment : Fragment() {
 
                 }
             })
+        }
+    }
+
+    fun listnerCarousel() {
+        binding.carousel.carouselListener = object  : CarouselListener {
+            override fun onClick(position: Int, carouselItem: CarouselItem) {
+                super.onClick(position, carouselItem)
+                Log.d("lol add", "click")
+                if(fullscreen) {
+                    binding.carousel.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, 400)
+                    fullscreen = false
+                } else {
+                    val mDisplay: Display = activity!!.windowManager.defaultDisplay
+                    val width: Int = mDisplay.width
+                    val height: Int = mDisplay.height
+                    binding.carousel.layoutParams = ConstraintLayout.LayoutParams(width, height)
+                    fullscreen = true
+                }
+            }
         }
     }
 
