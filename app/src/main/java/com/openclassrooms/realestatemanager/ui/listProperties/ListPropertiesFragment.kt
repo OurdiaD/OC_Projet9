@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.listProperties
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,10 @@ class ListPropertiesFragment : Fragment() {
         val adapter = ListPropertiesAdapter()
         //adapter.supportFragmentManager = activity?.supportFragmentManager
         //val repo = context?.let { PropertyRepository(it) }
-        listPropertiesModel.getAllProperties().observe(viewLifecycleOwner, {
+        val list = listPropertiesModel.getAllProperties()
+        list?.observe(viewLifecycleOwner, {
+            Log.d("list lol", " "+"it.size")
+            Log.d("list lol", " "+it.size)
             adapter.properties = it
             binding.listProperty.adapter = adapter
         })

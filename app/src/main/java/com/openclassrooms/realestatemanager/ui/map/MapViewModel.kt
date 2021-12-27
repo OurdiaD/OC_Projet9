@@ -8,9 +8,9 @@ import com.openclassrooms.realestatemanager.model.Property
 
 class MapViewModel(application: Application) : AndroidViewModel(application)  {
 
-    private val propertyRepository: PropertyRepository = PropertyRepository(application)
+    private val propertyRepository: PropertyRepository? = PropertyRepository.getInstance(application.applicationContext)
 
     fun getAllProperties(): LiveData<List<Property>> {
-        return propertyRepository.getAll()
+        return propertyRepository!!.getAll()
     }
 }

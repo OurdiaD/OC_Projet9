@@ -33,4 +33,12 @@
     <string name="fromgallery">Gallery</string>
     <string name="descmap">Position on map</string>
     <string name="action_edit">Edit</string>
+    <string name="minPrice">Min price</string>
+    <string name="maxPrice">Max price</string>
+    <string name="minSurface">Min surface</string>
+    <string name="maxSurface">Max surface</string>
+    <string name="minRooms">Min rooms</string>
+    <string name="maxRooms">Max rooms</string>
+    <string name="action_search">Search</string>
+    <string name="cancel">Cancel</string>
 </resources>

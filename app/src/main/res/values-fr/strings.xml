@@ -23,4 +23,12 @@
     <string name="fromgallery">Galerie</string>
     <string name="descmap">Position sur la carte</string>
     <string name="action_edit">Modifier</string>
+    <string name="minPrice">Min prix</string>
+    <string name="maxPrice">Max prix</string>
+    <string name="minSurface">Min surface</string>
+    <string name="maxSurface">Max surface</string>
+    <string name="minRooms">Min pièces</string>
+    <string name="maxRooms">Max pièces</string>
+    <string name="action_search">Rechercher</string>
+    <string name="cancel">Annuler</string>
 </resources>
