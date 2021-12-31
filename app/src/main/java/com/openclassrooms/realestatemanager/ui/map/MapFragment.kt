@@ -58,13 +58,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
         mMap = map
-        mapViewModel.getAllProperties().observe(viewLifecycleOwner, {
+        mapViewModel.getAllProperties()?.observe(viewLifecycleOwner, {
+            map.clear()
             for (property in it){
-                val location = Utils.getLocalisation(context, property.address)
+                val location = Utils.getLocalisation(context, property.property.address)
                 if (location != null) {
                     val loc = location.split(",")
                     val latlng = LatLng(loc[0].toDouble(), loc[1].toDouble())
-                    map.addMarker(MarkerOptions().position(latlng).title(Utils.getAddressToString(property.address)))
+                    map.addMarker(MarkerOptions().position(latlng).title(Utils.getAddressToString(property.property.address)))
                 }
             }
         })
