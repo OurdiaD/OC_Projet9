@@ -10,6 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 import com.openclassrooms.realestatemanager.model.Address
 import com.openclassrooms.realestatemanager.model.Picture
+import com.openclassrooms.realestatemanager.model.PointsOfInterest
 import java.util.concurrent.Executors
 
 
@@ -55,6 +56,7 @@ abstract class REMDatabase : RoomDatabase() {
            property1.describe = "description du bien immo"
            property1.address = address1
            property1.agent = "nom de l'agent"
+           property1.pointsOfInterest = PointsOfInterest(school = false, market = true, park = true)
 
            val property2 = Property(1, 12000, 25)
            property2.status = 0
@@ -62,6 +64,7 @@ abstract class REMDatabase : RoomDatabase() {
            property2.describe = "description du bien immo2"
            property2.address = address2
            property2.agent = "nom de l'agent2"
+           property2.pointsOfInterest = PointsOfInterest(school = true, market = true, park = false)
 
            return listOf(property1,property2)
        }

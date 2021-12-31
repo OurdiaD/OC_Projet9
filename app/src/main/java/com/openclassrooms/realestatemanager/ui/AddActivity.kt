@@ -7,12 +7,16 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Display
+import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.ActivityAddBinding
 import com.openclassrooms.realestatemanager.model.Address
+import com.openclassrooms.realestatemanager.model.PointsOfInterest
 import com.openclassrooms.realestatemanager.model.Property
 import com.openclassrooms.realestatemanager.ui.editProperty.EditViewModel
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
@@ -51,7 +55,6 @@ class AddActivity : CommonActivity()  {
         binding.addProperty.setOnClickListener {
             saveData()
             finish()
-            Log.d("lol add", "click")
         }
 
         binding.addPicGallery.setOnClickListener {
@@ -88,6 +91,8 @@ class AddActivity : CommonActivity()  {
                 listPicString.add(pic.linkPic)
             }
             binding.carousel.setData(listPic)
+            toogleCarrousel()
+            showPointsInterest(it.property.pointsOfInterest)
         }
 
     }
@@ -118,6 +123,7 @@ class AddActivity : CommonActivity()  {
         property.numberOfRooms = rooms
         property.describe = describe
         property.address = address
+        property.pointsOfInterest = getPointOfInterest()
 
         if (idProperty == null) {
             editViewModel.addProperty(property, listPicString)
@@ -143,15 +149,18 @@ class AddActivity : CommonActivity()  {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        lateinit var path: String
+        var path: String? = null
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
             path = data?.data?.let { getImageFilePath(it) }.toString()
         } else if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
             path = File("${getExternalFilesDir(null)}/imgShot"+datePic).toString()
         }
-        listPic.add(CarouselItem(imageUrl = path))
-        listPicString.add(path)
-        binding.carousel.setData(listPic)
+        if(path != null){
+            listPic.add(CarouselItem(imageUrl = path))
+            listPicString.add(path)
+            binding.carousel.setData(listPic)
+        }
+        toogleCarrousel()
     }
 
     private fun getImageFilePath(uri: Uri): String {
@@ -199,4 +208,36 @@ class AddActivity : CommonActivity()  {
             }
         }
     }
+
+    fun toogleCarrousel() {
+        if(listPicString.size > 0){
+            binding.carousel.visibility = VISIBLE
+        } else {
+            binding.carousel.visibility = GONE
+        }
+    }
+
+    fun getPointOfInterest(): PointsOfInterest {
+        val health = binding.addHealth.isChecked
+        val school = binding.addSchool.isChecked
+        val market = binding.addMarket.isChecked
+        val transport = binding.addTransports.isChecked
+        val restaurant = binding.addRestaurant.isChecked
+        val park = binding.addPark.isChecked
+
+        return PointsOfInterest(school, market, park, restaurant, health, transport)
+    }
+
+
+    private fun showPointsInterest(points: PointsOfInterest?) {
+        if (points != null) {
+            binding.addHealth.isChecked = points.health
+            binding.addSchool.isChecked = points.school
+            binding.addMarket.isChecked = points.market
+            binding.addTransports.isChecked = points.transports
+            binding.addRestaurant.isChecked = points.restaurant
+            binding.addPark.isChecked = points.park
+        }
+    }
+
 }

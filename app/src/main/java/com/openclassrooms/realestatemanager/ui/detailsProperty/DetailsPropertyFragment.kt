@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailsPropertyBinding
+import com.openclassrooms.realestatemanager.model.Picture
+import com.openclassrooms.realestatemanager.model.PointsOfInterest
 import com.openclassrooms.realestatemanager.ui.AddActivity
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
 import com.openclassrooms.realestatemanager.utils.Utils
@@ -45,6 +47,8 @@ class DetailsPropertyFragment : Fragment() {
                 binding.detailsPrice.text = it.property.price.toString()
                 binding.detailsDescribe.text = it.property.describe.toString()
                 binding.detailsRooms.text = it.property.numberOfRooms.toString()
+
+                toogleCarrousel(it.pictures)
                 binding.carousel.registerLifecycle(lifecycle)
                 val list = mutableListOf<CarouselItem>()
                 for (pic in it.pictures) {
@@ -60,7 +64,35 @@ class DetailsPropertyFragment : Fragment() {
                     Glide.with(requireContext()).load(url).into(binding.detailsMap)
 
                 }
+
+                getPointsInterest(it.property.pointsOfInterest)
             })
+        }
+    }
+
+    private fun getPointsInterest(points: PointsOfInterest?) {
+        if (points != null) {
+            binding.detailsHealth.visibility = checkPoints(points.health)
+            binding.detailsSchool.visibility = checkPoints(points.school)
+            binding.detailsMarket.visibility = checkPoints(points.market)
+            binding.detailsTransport.visibility = checkPoints(points.transports)
+            binding.detailsRestaurant.visibility = checkPoints(points.restaurant)
+            binding.detailsPark.visibility = checkPoints(points.park)
+        }
+    }
+
+    private fun checkPoints(point: Boolean): Int {
+        return if (point)
+            View.VISIBLE
+        else
+            View.GONE
+    }
+
+    fun toogleCarrousel(list: List<Picture>) {
+        if(list.size > 0){
+            binding.carousel.visibility = View.VISIBLE
+        } else {
+            binding.carousel.visibility = View.GONE
         }
     }
 

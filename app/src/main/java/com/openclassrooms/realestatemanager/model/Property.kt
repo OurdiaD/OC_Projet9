@@ -16,7 +16,6 @@ data class Property(
     @ColumnInfo(name = "numberOfRooms") var numberOfRooms = 0
     @ColumnInfo(name = "describe") var describe: String? = null
     @ColumnInfo(name = "location")  var location: String? = null
-    @ColumnInfo(name = "pointsOfInterest")  var pointsOfInterest: String? = null
     @ColumnInfo(name = "status")  var status: Int? = null
     @ColumnInfo(name = "dateIn")  var dateIn: Long = Date().time
     @ColumnInfo(name = "dateSell") var dateSell: Long? = null
@@ -24,4 +23,6 @@ data class Property(
     @ColumnInfo(name = "position") var position: String? = null
     @Embedded
     var address: Address? = null
+    @Embedded
+    var pointsOfInterest: PointsOfInterest? = null
 }

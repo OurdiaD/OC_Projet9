@@ -1,9 +1,7 @@
 package com.openclassrooms.realestatemanager.ui
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.openclassrooms.realestatemanager.R
@@ -34,21 +32,12 @@ class SearchDialog : DialogFragment() {
     }
 
     fun getParam(){
-        //val binding = DialogSearchBinding.inflate(layoutInflater)
         val minPrice = binding.searchMinPriceEdit.text.toString()
         val maxPrice = binding.searchMaxPriceEdit.text.toString()
         val minSurface = binding.searchMinSurfaceEdit.text.toString()
         val maxSurface = binding.searchMaxSurfaceEdit.text.toString()
         val minRoom = binding.searchMinRoomsEdit.text.toString()
         val maxRoom = binding.searchMaxRoomsEdit.text.toString()
-
-        Log.d("lol dialog", "minPrice")
-        Log.d("lol dialog", minPrice)
-        Log.d("lol dialog", "" +binding)
-        Log.d("lol dialog", "" +binding.searchMaxPriceEdit)
-        Log.d("lol dialog", "" +binding.searchMaxPriceEdit.text)
-        Log.d("lol dialog", "" +binding.searchMaxPriceEdit.text.toString())
-        Log.d("lol dialog", minSurface)
 
         var query = ""
         var baseQuery = "SELECT * FROM property"

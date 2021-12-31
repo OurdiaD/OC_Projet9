@@ -26,4 +26,10 @@
     <style name="spinnerTheme" parent= "Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
         <item name="strokeColor">@color/white</item>
     </style>
+
+    <style name="TextTitle" >
+        <item name="android:textColor">@color/purple_500</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>

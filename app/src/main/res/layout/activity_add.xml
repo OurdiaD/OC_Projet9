@@ -308,6 +308,7 @@
             app:carouselType="SHOWCASE"
             app:carouselGravity="CENTER"
             app:scaleOnScroll="true"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/describe_property" />
@@ -342,8 +343,58 @@
             android:layout_height="wrap_content"
             android:text="@string/action_add"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/add_pic_gallery"
+            app:layout_constraintTop_toBottomOf="@+id/add_restaurant"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <CheckBox
+            android:id="@+id/add_health"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/health"
+            app:layout_constraintTop_toBottomOf="@id/add_pic_gallery"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/add_school"/>
+        <CheckBox
+            android:id="@+id/add_school"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/school"
+            app:layout_constraintTop_toBottomOf="@id/add_pic_gallery"
+            app:layout_constraintStart_toEndOf="@id/add_health"
+            app:layout_constraintEnd_toStartOf="@+id/add_market"/>
+        <CheckBox
+            android:id="@+id/add_market"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/market"
+            app:layout_constraintTop_toBottomOf="@id/add_pic_gallery"
+            app:layout_constraintStart_toEndOf="@id/add_school"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <CheckBox
+            android:id="@+id/add_transports"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/transports"
+            app:layout_constraintTop_toBottomOf="@id/add_market"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/add_restaurant"/>
+        <CheckBox
+            android:id="@+id/add_restaurant"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant"
+            app:layout_constraintTop_toBottomOf="@id/add_market"
+            app:layout_constraintStart_toEndOf="@id/add_transports"
+            app:layout_constraintEnd_toStartOf="@id/add_park"/>
+        <CheckBox
+            android:id="@+id/add_park"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/park"
+            app:layout_constraintTop_toBottomOf="@id/add_market"
+            app:layout_constraintStart_toEndOf="@id/add_restaurant"
             app:layout_constraintEnd_toEndOf="parent"/>
 
 

@@ -31,4 +31,11 @@
     <string name="maxRooms">Max pièces</string>
     <string name="action_search">Rechercher</string>
     <string name="cancel">Annuler</string>
+    <string name="school">Ecoles</string>
+    <string name="market">Commerces</string>
+    <string name="park">Parcs</string>
+    <string name="restaurant">Restaurants</string>
+    <string name="health">Santés</string>
+    <string name="transports">Transports</string>
+    <string name="pointsInterest">Lieux à proximité</string>
 </resources>

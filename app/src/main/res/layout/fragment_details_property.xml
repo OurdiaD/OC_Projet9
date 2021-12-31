@@ -25,51 +25,150 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/details_price"
+    <LinearLayout
+        android:id="@+id/layout_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="TextView"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/carousel"/>
+        app:layout_constraintTop_toBottomOf="@id/carousel">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextTitle"
+            android:text="@string/price"/>
+        <TextView
+            android:id="@+id/details_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/details_describe"
+    <LinearLayout
+        android:id="@+id/layout_describe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="TextView"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/details_price"/>
+        app:layout_constraintTop_toBottomOf="@id/layout_price">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextTitle"
+            android:text="@string/describe"/>
+        <TextView
+            android:id="@+id/details_describe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/details_surface"
+    <LinearLayout
+        android:id="@+id/layout_surface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="TextView"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/details_describe" />
+        app:layout_constraintTop_toBottomOf="@id/layout_describe">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextTitle"
+            android:text="@string/surface"/>
+        <TextView
+            android:id="@+id/details_surface"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/details_rooms"
+    <LinearLayout
+        android:id="@+id/layout_rooms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/details_describe" />
+        app:layout_constraintTop_toBottomOf="@id/layout_describe">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextTitle"
+            android:text="@string/rooms"/>
+        <TextView
+            android:id="@+id/details_rooms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
+
+    <TextView
+        android:id="@+id/point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textAppearance="@style/TextTitle"
+        android:text="@string/pointsInterest"
+        app:layout_constraintTop_toBottomOf="@+id/layout_rooms"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/layout_point"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/point"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <com.google.android.material.chip.Chip
+            android:id="@+id/details_health"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/health"
+            android:visibility="gone"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/details_school"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/school"
+            android:visibility="gone"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/details_market"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/market"
+            android:visibility="gone"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/details_transport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/transports"
+            android:visibility="gone"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/details_restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant"
+            android:visibility="gone"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/details_park"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/park"
+            android:visibility="gone"/>
+    </com.google.android.material.chip.ChipGroup>
 
     <ImageView
         android:id="@+id/details_map"
@@ -78,7 +177,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/details_rooms"
+        app:layout_constraintTop_toBottomOf="@+id/layout_point"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="@string/descmap" />

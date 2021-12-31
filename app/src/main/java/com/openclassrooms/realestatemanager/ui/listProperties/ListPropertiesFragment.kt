@@ -32,10 +32,7 @@ class ListPropertiesFragment : Fragment() {
     }
 
     private fun getList() {
-
         val adapter = ListPropertiesAdapter()
-        //adapter.supportFragmentManager = activity?.supportFragmentManager
-        //val repo = context?.let { PropertyRepository(it) }
         val list = listPropertiesModel.getAllProperties()
         list?.observe(viewLifecycleOwner, {
             Log.d("list lol", " "+"it.size")

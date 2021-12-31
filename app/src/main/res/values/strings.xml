@@ -41,4 +41,11 @@
     <string name="maxRooms">Max rooms</string>
     <string name="action_search">Search</string>
     <string name="cancel">Cancel</string>
+    <string name="school">School</string>
+    <string name="market">Market</string>
+    <string name="park">Park</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="health">Health</string>
+    <string name="transports">Transports</string>
+    <string name="pointsInterest">Point of interest</string>
 </resources>
