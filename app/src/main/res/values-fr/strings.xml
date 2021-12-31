@@ -38,4 +38,6 @@
     <string name="health">Santés</string>
     <string name="transports">Transports</string>
     <string name="pointsInterest">Lieux à proximité</string>
+    <string name="list">Liste</string>
+    <string name="map">Carte</string>
 </resources>

@@ -48,4 +48,6 @@
     <string name="health">Health</string>
     <string name="transports">Transports</string>
     <string name="pointsInterest">Point of interest</string>
+    <string name="list">List</string>
+    <string name="map">Map</string>
 </resources>
