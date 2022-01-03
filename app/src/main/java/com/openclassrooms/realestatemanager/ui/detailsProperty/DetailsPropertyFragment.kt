@@ -56,14 +56,25 @@ class DetailsPropertyFragment : Fragment() {
                 }
                 binding.carousel.setData(list)
 
-                val location = Utils.getLocalisation(context,it.property.address)
-                if (location != null) {
-                    val url = "https://maps.googleapis.com/maps/api/staticmap?center="+location+
-                            "&zoom=15&size=300x300&maptype=roadmap&markers=color:red%7Clabel:C%7C" +location+
-                            "&key=" + BuildConfig.API_KEY
-                    Glide.with(requireContext()).load(url).into(binding.detailsMap)
 
-                }
+                Utils.isInternetAvailable(context).observe(viewLifecycleOwner, { success ->
+                    Log.d("lol co", "" + success)
+                    if (success) {
+                        binding.detailsMap.visibility = View.VISIBLE
+                        binding.internetFail.visibility = View.GONE
+                        val location = Utils.getLocalisation(context,it.property.address)
+                        if (location != null) {
+                            val url = "https://maps.googleapis.com/maps/api/staticmap?center="+location+
+                                    "&zoom=15&size=300x300&maptype=roadmap&markers=color:red%7Clabel:C%7C" +location+
+                                    "&key=" + BuildConfig.API_KEY
+                            Glide.with(requireContext()).load(url).into(binding.detailsMap)
+                        }
+                    } else {
+                        binding.detailsMap.visibility = View.GONE
+                        binding.internetFail.visibility = View.VISIBLE
+                    }
+                })
+
 
                 getPointsInterest(it.property.pointsOfInterest)
             })

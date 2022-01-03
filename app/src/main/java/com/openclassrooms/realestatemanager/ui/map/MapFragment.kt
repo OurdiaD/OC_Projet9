@@ -16,11 +16,15 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.databinding.FragmentMapBinding
 import com.openclassrooms.realestatemanager.utils.Utils
 import android.content.pm.PackageManager
+import android.util.Log
 
 import androidx.core.app.ActivityCompat
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.openclassrooms.realestatemanager.BuildConfig
+import com.openclassrooms.realestatemanager.utils.Utils.isInternetAvailable
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -41,14 +45,36 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val root: View = binding.root
 
         mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as SupportMapFragment
-        mapFragment.getMapAsync(this)
+
+        /*if (isInternetAvailable(context))
+            mapFragment.getMapAsync(this)
+        else
+            binding.internetFail.visibility = View.VISIBLE*/
+        /*Utils.isInternetAvailable(context).observe(viewLifecycleOwner, { success ->
+            if (success)
+                mapFragment.getMapAsync(this)
+            else
+                binding.internetFail.visibility = View.VISIBLE
+        })*/
+
         return root
     }
 
     override fun onResume() {
         super.onResume()
-        if (hasPermissions())
-            getCurrentLocation()
+        /*if (hasPermissions() && isInternetAvailable(context))
+            getCurrentLocation()*/
+
+        Utils.isInternetAvailable(context).observe(viewLifecycleOwner, { success ->
+            Log.d("lol co", "" + success)
+            if (success) {
+                binding.internetFail.visibility = View.GONE
+                mapFragment.getMapAsync(this)
+            } else {
+                binding.internetFail.visibility = View.VISIBLE
+            }
+
+        })
     }
 
     override fun onDestroyView() {
@@ -68,6 +94,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     map.addMarker(MarkerOptions().position(latlng).title(Utils.getAddressToString(property.property.address)))
                 }
             }
+
+            if (hasPermissions()) getCurrentLocation()
         })
     }
 

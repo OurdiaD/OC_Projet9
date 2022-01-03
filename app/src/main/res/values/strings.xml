@@ -50,4 +50,5 @@
     <string name="pointsInterest">Point of interest</string>
     <string name="list">List</string>
     <string name="map">Map</string>
+    <string name="noNetwork">Activate your internet connection to display the information on the map</string>
 </resources>

@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.fragment.app.FragmentContainerView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    class="com.google.android.gms.maps.SupportMapFragment"
-    android:id="@+id/map"
     android:layout_width="match_parent"
-    android:tag="mapFragment"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent">
+    <androidx.fragment.app.FragmentContainerView
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:tag="mapFragment"
+        android:layout_height="match_parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/internet_fail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textAlignment="center"
+            android:text="@string/noNetwork"/>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
+
