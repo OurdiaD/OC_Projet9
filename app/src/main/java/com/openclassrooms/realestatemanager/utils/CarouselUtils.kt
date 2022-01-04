@@ -1,20 +1,14 @@
 package com.openclassrooms.realestatemanager.utils
 
 import android.app.Activity
-import android.content.Context
-import android.util.Log
-import android.view.Display
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.WindowManager
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewbinding.ViewBinding
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.ItemCarouselCustomBinding
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel
 import org.imaginativeworld.whynotimagecarousel.listener.CarouselListener
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
-import org.imaginativeworld.whynotimagecarousel.model.CarouselType
 import org.imaginativeworld.whynotimagecarousel.utils.setImage
 
 class CarouselUtils {

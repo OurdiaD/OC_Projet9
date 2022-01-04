@@ -6,11 +6,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.Display
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import com.openclassrooms.realestatemanager.R
@@ -23,7 +20,6 @@ import com.openclassrooms.realestatemanager.utils.CarouselUtils
 import com.openclassrooms.realestatemanager.utils.Utils
 import org.imaginativeworld.whynotimagecarousel.listener.CarouselListener
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
-import org.imaginativeworld.whynotimagecarousel.model.CarouselType
 import java.io.File
 
 
