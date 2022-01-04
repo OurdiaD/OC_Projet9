@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -19,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
+import com.openclassrooms.realestatemanager.ui.detailsProperty.DetailsPropertyFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         initPermission()
+        //configureAndShowDetailFragment()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -96,6 +99,19 @@ class MainActivity : AppCompatActivity() {
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 PackageManager.PERMISSION_GRANTED
             )
+        }
+    }
+
+    private fun configureAndShowDetailFragment() {
+        var detailFragment =
+            supportFragmentManager.findFragmentById(R.id.frame_layout_detail) as DetailsPropertyFragment?
+
+        //A - We only add DetailFragment in Tablet mode (If found frame_layout_detail)
+        if (detailFragment == null && findViewById<View?>(R.id.frame_layout_detail) != null) {
+            detailFragment = DetailsPropertyFragment()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.frame_layout_detail, detailFragment)
+                .commit()
         }
     }
 }

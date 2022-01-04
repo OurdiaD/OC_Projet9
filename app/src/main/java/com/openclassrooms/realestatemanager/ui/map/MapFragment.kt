@@ -46,26 +46,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as SupportMapFragment
 
-        /*if (isInternetAvailable(context))
-            mapFragment.getMapAsync(this)
-        else
-            binding.internetFail.visibility = View.VISIBLE*/
-        /*Utils.isInternetAvailable(context).observe(viewLifecycleOwner, { success ->
-            if (success)
-                mapFragment.getMapAsync(this)
-            else
-                binding.internetFail.visibility = View.VISIBLE
-        })*/
-
         return root
     }
 
     override fun onResume() {
         super.onResume()
-        /*if (hasPermissions() && isInternetAvailable(context))
-            getCurrentLocation()*/
-
-        Utils.isInternetAvailable(context).observe(viewLifecycleOwner, { success ->
+        isInternetAvailable(context).observe(viewLifecycleOwner, { success ->
             Log.d("lol co", "" + success)
             if (success) {
                 binding.internetFail.visibility = View.GONE

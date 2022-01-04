@@ -58,7 +58,6 @@ class DetailsPropertyFragment : Fragment() {
 
 
                 Utils.isInternetAvailable(context).observe(viewLifecycleOwner, { success ->
-                    Log.d("lol co", "" + success)
                     if (success) {
                         binding.detailsMap.visibility = View.VISIBLE
                         binding.internetFail.visibility = View.GONE

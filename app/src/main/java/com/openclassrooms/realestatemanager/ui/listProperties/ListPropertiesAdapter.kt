@@ -2,17 +2,20 @@ package com.openclassrooms.realestatemanager.ui.listProperties
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.PropertyAndPictures
 import com.openclassrooms.realestatemanager.ui.detailsProperty.DetailsPropertyActivity
+import com.openclassrooms.realestatemanager.ui.detailsProperty.DetailsPropertyFragment
 
 
 class ListPropertiesAdapter : RecyclerView.Adapter<ListPropertiesAdapter.ListViewHolder>() {
@@ -41,22 +44,24 @@ class ListPropertiesAdapter : RecyclerView.Adapter<ListPropertiesAdapter.ListVie
             Glide.with(context).load(property.pictures[0].linkPic).into(holder.picture)
         }
 
+        holder.itemView.setOnClickListener {
+            val isTablet = context.resources.getBoolean(R.bool.isTablet)
+            val activity = context as AppCompatActivity
 
-
-            holder.itemView.setOnClickListener {
-                /*val bundle = Bundle()
+            if (isTablet) {
+                val bundle = Bundle()
                 bundle.putLong("id_property", property.property.idProperty)
                 val fragment = DetailsPropertyFragment()
                 fragment.arguments = bundle
-                val transaction = supportFragmentManager!!.beginTransaction()
-                transaction.replace(R.id.fragment_list, fragment)
-                transaction.commit()*/
-
+                val transaction = activity.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.frame_layout_detail, fragment)
+                transaction.commit()
+            } else {
                 val intent = Intent(context, DetailsPropertyActivity::class.java)
                 intent.putExtra("id_property", property.property.idProperty)
                 startActivity(context, intent, null)
             }
-
+        }
     }
 
     class ListViewHolder (itemView: View)  : RecyclerView.ViewHolder(itemView) {

@@ -63,23 +63,8 @@ public class Utils {
     public static MutableLiveData<Boolean> isInternetAvailable(Context context) {
         /*WifiManager wifi = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         return wifi.isWifiEnabled();*/
-        /*boolean success = false;
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();*/
-        /*if(activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
-            URL url = new URL("https://google.com");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(10000);
-            connection.connect();
-            success = connection.getResponseCode() == 200;
-        }
-        return success;*/
-
-        MutableLiveData<Boolean> success = new MutableLiveData<Boolean>();
-        //boolean success = false;
+        MutableLiveData<Boolean> success = new MutableLiveData<>();
         success.setValue(false);
         Executors.newSingleThreadExecutor().execute(() -> {
             ConnectivityManager connectivityManager
@@ -101,15 +86,6 @@ public class Utils {
 
         });
         return success;
-        /*final ConnectivityManager connectivityManager = (ConnectivityManager)context.
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        final Network network = connectivityManager.getActiveNetwork();
-        final NetworkCapabilities capabilities = connectivityManager
-                .getNetworkCapabilities(network);
-
-        return capabilities != null
-                && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);*/
     }
 
     public static String getLocalisation(Context context, Address address) throws IOException {
