@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.model
 
+import android.content.ContentValues
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -25,4 +26,17 @@ data class Property(
     var address: Address? = null
     @Embedded
     var pointsOfInterest: PointsOfInterest? = null
+
+
+    companion object {
+        fun fromContentValues(values: ContentValues): Property {
+            val item = Property()
+            if (values.containsKey("idProperty")) item.idProperty = values.getAsLong("idProperty")
+            if (values.containsKey("type")) item.type = values.getAsInteger("type")
+            if (values.containsKey("price")) item.price = values.getAsInteger("price")
+            if (values.containsKey("surfaceArea")) item.surfaceArea = values.getAsInteger("surfaceArea")
+            if (values.containsKey("numberOfRooms")) item.numberOfRooms = values.getAsInteger("numberOfRooms")
+            return item
+        }
+    }
 }

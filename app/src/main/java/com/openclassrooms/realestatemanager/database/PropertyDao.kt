@@ -1,10 +1,16 @@
 package com.openclassrooms.realestatemanager.database
 
+import android.content.ContentValues
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.openclassrooms.realestatemanager.model.Property
 import com.openclassrooms.realestatemanager.model.PropertyAndPictures
+import androidx.room.Delete
+
+
+
 
 @Dao
 interface PropertyDao {
@@ -31,4 +37,16 @@ interface PropertyDao {
 
     @Update
     fun update(vararg property: Property)
+
+    @Query("SELECT * FROM property where idProperty = :idProperty")
+    fun getItemsWithCursor(idProperty: Long): Cursor
+
+    @Query("SELECT * FROM property")
+    fun getAllsItemsWithCursor(): List<Cursor>
+
+    @Query("DELETE FROM property where idProperty = :idProperty")
+    fun delete(idProperty: Long)
+
+    @Query("DELETE FROM property")
+    fun deleteAll()
 }

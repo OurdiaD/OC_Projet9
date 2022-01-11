@@ -22,6 +22,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/API_KEY" />
 
+        <provider
+         android:name=".providers.ItemContentProvider"
+         android:authorities="com.openclassrooms.realestatemanager.providers"
+         android:exported="true"/>
+
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
