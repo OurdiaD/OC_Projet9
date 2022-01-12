@@ -29,9 +29,8 @@ class ItemContentProvider: ContentProvider() {
 
         if (context != null) {
             val mContext = context!!
-            val userId = ContentUris.parseId(uri)
             val db = REMDatabase.getInstance(mContext)
-            val cursor = db!!.propertyDao().getItemsWithCursor(userId)
+            val cursor = db!!.propertyDao().getAllsItemsWithCursor()
             cursor.setNotificationUri(mContext.contentResolver, uri)
             return cursor
         }

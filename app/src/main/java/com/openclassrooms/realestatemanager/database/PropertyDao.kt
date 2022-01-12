@@ -42,7 +42,7 @@ interface PropertyDao {
     fun getItemsWithCursor(idProperty: Long): Cursor
 
     @Query("SELECT * FROM property")
-    fun getAllsItemsWithCursor(): List<Cursor>
+    fun getAllsItemsWithCursor(): Cursor
 
     @Query("DELETE FROM property where idProperty = :idProperty")
     fun delete(idProperty: Long)

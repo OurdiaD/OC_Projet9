@@ -33,56 +33,15 @@ class ItemContentProviderTest {
         .allowMainThreadQueries()
         .build()
         mContentResolver = context.contentResolver
-        //db.propertyDao().deleteAll()
     }
 
-    @After
-    fun delete() {
-        db.close()
-    }
-    
-    @Test
-    fun getItemsWhenNoItemInserted() {
-        val cursor = mContentResolver!!.query(ContentUris.withAppendedId(ItemContentProvider.URI_ITEM, USER_ID), null, null, null, null)
-        assertThat(cursor, notNullValue())
-        assertThat(cursor!!.count, `is`(0))
-        cursor.close()
-    }
-    
     @Test
     fun insertAndGetItem() {
-        // BEFORE : Adding demo item
-        val userUri = mContentResolver!!.insert(ItemContentProvider.URI_ITEM, generateItem())
-        // TEST
-        val cursor = mContentResolver!!.query(ContentUris.withAppendedId(ItemContentProvider.URI_ITEM, USER_ID), null, null, null, null)
+        val cursor = mContentResolver!!.query(ItemContentProvider.URI_ITEM, null, null, null, null)
         assertThat(cursor, notNullValue())
-        assertThat(cursor!!.count, `is`(1))
+        assertThat(cursor!!.count, `is`(2))
         assertThat(cursor.moveToFirst(), `is`(true))
-        assertThat(cursor.getString(cursor.getColumnIndexOrThrow("type")), `is`("0"))
-        db.propertyDao().deleteAll()
+        assertThat(cursor.getString(cursor.getColumnIndexOrThrow("type")), `is`("3"))
     }
 
-    /*@Test
-    fun deleteTest() {
-        var cursor = mContentResolver!!.query(ContentUris.withAppendedId(ItemContentProvider.URI_ITEM, USER_ID), null, null, null, null)
-        assertThat(cursor, notNullValue())
-        assertThat(cursor!!.count, `is`(1))
-        mContentResolver!!.delete(ContentUris.withAppendedId(ItemContentProvider.URI_ITEM, USER_ID), null, null)
-        cursor = mContentResolver!!.query(ContentUris.withAppendedId(ItemContentProvider.URI_ITEM, USER_ID), null, null, null, null)
-        assertThat(cursor, notNullValue())
-        assertThat(cursor!!.count, `is`(0))
-    }*/
-
-    private fun generateItem(): ContentValues {
-         val values = ContentValues()
-         values.put("type", "0")
-         values.put("price", "120000")
-         values.put("surfaceArea", "120")
-         values.put("numberOfRooms", "6")
-         return values
-    }
-    
-    companion object {
-        private const val USER_ID: Long = 3
-    }
 }
