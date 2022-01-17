@@ -132,6 +132,7 @@
 
 
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/layout_point"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
@@ -187,5 +188,106 @@
         app:layout_constraintStart_toEndOf="@id/search_restaurant"
         app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_min_datein"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/sellSince"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:endIconMode="custom"
+        app:endIconDrawable="@android:drawable/ic_menu_close_clear_cancel"
+        app:layout_constraintTop_toBottomOf="@id/layout_point"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/search_max_datein">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_min_datein_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:inputType="none|textNoSuggestions"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_max_datein"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/to"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:endIconMode="custom"
+        app:endIconDrawable="@android:drawable/ic_menu_close_clear_cancel"
+        app:layout_constraintTop_toBottomOf="@id/layout_point"
+        app:layout_constraintStart_toEndOf="@id/search_min_datein"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_max_datein_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:inputType="none|textNoSuggestions"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_min_datesold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/soldSince"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:endIconMode="custom"
+        app:endIconDrawable="@android:drawable/ic_menu_close_clear_cancel"
+        app:layout_constraintTop_toBottomOf="@id/search_max_datein"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/search_max_datesold">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_min_datesold_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:inputType="none|textNoSuggestions"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_max_datesold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/to"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:endIconMode="custom"
+        app:endIconDrawable="@android:drawable/ic_menu_close_clear_cancel"
+        app:layout_constraintTop_toBottomOf="@id/search_max_datein"
+        app:layout_constraintStart_toEndOf="@id/search_min_datesold"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_max_datesold_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:inputType="none|textNoSuggestions"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

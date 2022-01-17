@@ -2,13 +2,17 @@ package com.openclassrooms.realestatemanager.ui
 
 import android.app.Dialog
 import android.os.Bundle
-import android.text.BoringLayout
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.size
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.DialogSearchBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SearchDialog : DialogFragment() {
 
@@ -28,6 +32,10 @@ class SearchDialog : DialogFragment() {
         var park: Boolean = false
         var restaurant: Boolean = false
         var transports: Boolean = false
+        var minDatein:Long = 0L
+        var maxDatein:Long = 0L
+        var minDatesold:Long = 0L
+        var maxDatesold:Long = 0L
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -47,6 +55,7 @@ class SearchDialog : DialogFragment() {
                 }
             putLastValues()
             setInterests()
+            initDate()
             builder.create()
 
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -80,13 +89,88 @@ class SearchDialog : DialogFragment() {
         query += getQueryBool("transports", transports)
         query += getQueryBool("restaurant", restaurant)
         query += getQueryBool("park", park)
+        query += getQueryLongSupTo("dateIn", minDatein)
+        query += getQueryLongInfTo("dateIn", maxDatein)
+        query += getQueryLongSupTo("dateSell", minDatesold)
+        query += getQueryLongInfTo("dateSell", maxDatesold)
 
         if (condition) {
             baseQuery += " WHERE $query"
         }
-
+Log.d("lol query", baseQuery)
         context?.let { PropertyRepository.getInstance(it)?.getQuery(baseQuery) }
 
+    }
+
+    fun putLastValues() {
+        binding.searchMinPriceEdit.setText(minPrice)
+        binding.searchMaxPriceEdit.setText(maxPrice)
+        binding.searchMinSurfaceEdit.setText(minSurface)
+        binding.searchMaxSurfaceEdit.setText(maxSurface)
+        binding.searchMinRoomsEdit.setText(minRoom)
+        binding.searchMaxRoomsEdit.setText(maxRoom)
+    }
+
+    fun setInterests() {
+        binding.searchHealth.isChecked = health
+        binding.searchSchool.isChecked = school
+        binding.searchMarket.isChecked = market
+        binding.searchTransports.isChecked = transports
+        binding.searchRestaurant.isChecked = restaurant
+        binding.searchPark.isChecked = park
+
+    }
+
+    fun initDate() {
+        binding.searchMinDateinEdit.setOnClickListener {
+            datePicker(binding.searchMinDateinEdit)
+        }
+        binding.searchMaxDateinEdit.setOnClickListener {
+            datePicker(binding.searchMaxDateinEdit)
+        }
+        binding.searchMinDatesoldEdit.setOnClickListener {
+            datePicker(binding.searchMinDatesoldEdit)
+        }
+        binding.searchMaxDatesoldEdit.setOnClickListener {
+            datePicker(binding.searchMaxDatesoldEdit)
+        }
+        binding.searchMinDatein.setEndIconOnClickListener {
+            minDatein = 0L
+            binding.searchMinDateinEdit.setText("")
+        }
+        binding.searchMaxDatein.setEndIconOnClickListener {
+            maxDatein = 0L
+            binding.searchMaxDateinEdit.setText("")
+        }
+        binding.searchMinDatesold.setEndIconOnClickListener {
+            minDatesold = 0L
+            binding.searchMinDatesoldEdit.setText("")
+        }
+        binding.searchMaxDatesold.setEndIconOnClickListener {
+            maxDatesold = 0L
+            binding.searchMaxDatesoldEdit.setText("")
+        }
+    }
+
+    fun datePicker(input: TextInputEditText) {
+        val datepicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Select Date")
+            .build()
+
+        datepicker.show(parentFragmentManager, "date")
+        datepicker.addOnPositiveButtonClickListener {
+            when (input.id) {
+                R.id.search_min_datein_edit -> minDatein = it
+                R.id.search_max_datein_edit -> maxDatein = it
+                R.id.search_min_datesold_edit -> minDatesold = it
+                R.id.search_max_datesold_edit -> maxDatesold = it
+            }
+
+            /*val calendar = Calendar.getInstance()
+            calendar.timeInMillis = it*/
+            val dateShow = SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(it)
+            input.setText(dateShow)
+        }
     }
 
     fun getQueryIntSupTo(field: String, value: String): String {
@@ -119,24 +203,23 @@ class SearchDialog : DialogFragment() {
         return query
     }
 
-    fun putLastValues() {
-        binding.searchMinPriceEdit.setText(minPrice)
-        binding.searchMaxPriceEdit.setText(maxPrice)
-        binding.searchMinSurfaceEdit.setText(minSurface)
-        binding.searchMaxSurfaceEdit.setText(maxSurface)
-        binding.searchMinRoomsEdit.setText(minRoom)
-        binding.searchMaxRoomsEdit.setText(maxRoom)
+    fun getQueryLongSupTo(field: String, value: Long): String {
+        var query = ""
+        if (value != 0L){
+            if (condition) query = " AND"
+            query = "$query $field > $value"
+            condition = true
+        }
+        return query
     }
 
-    fun setInterests() {
-        binding.searchHealth.isChecked = health
-        binding.searchSchool.isChecked = school
-        binding.searchMarket.isChecked = market
-        binding.searchTransports.isChecked = transports
-        binding.searchRestaurant.isChecked = restaurant
-        binding.searchPark.isChecked = park
-
+    fun getQueryLongInfTo(field: String, value: Long): String {
+        var query = ""
+        if (value != 0L){
+            if (condition) query = " AND"
+            query = " $query $field < $value"
+            condition = true
+        }
+        return query
     }
-
-
 }

@@ -47,6 +47,7 @@ class DetailsPropertyFragment : Fragment() {
                 binding.detailsPrice.text = it.property.price.toString()
                 binding.detailsDescribe.text = it.property.describe.toString()
                 binding.detailsRooms.text = it.property.numberOfRooms.toString()
+                binding.detailsAgent.text = it.property.agent.toString()
 
                 toogleCarrousel(it.pictures)
                 binding.carousel.registerLifecycle(lifecycle)

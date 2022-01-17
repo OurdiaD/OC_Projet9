@@ -40,5 +40,9 @@
     <string name="pointsInterest">Lieux à proximité</string>
     <string name="list">Liste</string>
     <string name="map">Carte</string>
+    <string name="sellSince">En vente depuis</string>
+    <string name="to">jusqu\'au</string>
+    <string name="soldSince">Vendu depuis</string>
     <string name="noNetwork">Activer votre connexion internet pour afficher les informations sur la carte</string>
+    <string name="agentName">Nom de l\'agent</string>
 </resources>

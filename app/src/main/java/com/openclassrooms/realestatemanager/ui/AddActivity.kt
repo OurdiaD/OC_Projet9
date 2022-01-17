@@ -21,6 +21,7 @@ import com.openclassrooms.realestatemanager.utils.Utils
 import org.imaginativeworld.whynotimagecarousel.listener.CarouselListener
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 import java.io.File
+import java.util.*
 
 
 class AddActivity : CommonActivity()  {
@@ -81,6 +82,7 @@ class AddActivity : CommonActivity()  {
             binding.addressStreetEdit.setText(it.property.address?.street.toString())
             binding.addressPostCodeEdit.setText(it.property.address?.postCode.toString())
             binding.addressCityEdit.setText(it.property.address?.city.toString())
+            binding.agentNameEdit.setText(it.property.agent.toString())
 
             for (pic in it.pictures) {
                 listPic.add(CarouselItem(imageUrl = pic.linkPic))
@@ -104,6 +106,7 @@ class AddActivity : CommonActivity()  {
         val street = binding.addressStreetEdit.text.toString()
         val postalCode = binding.addressPostCodeEdit.text.toString()
         val city = binding.addressCityEdit.text.toString()
+        val agent = binding.agentNameEdit.text.toString()
 
         val address = Address(number, street, city, postalCode)
 
@@ -119,7 +122,12 @@ class AddActivity : CommonActivity()  {
         property.numberOfRooms = rooms
         property.describe = describe
         property.address = address
+        property.agent = agent
         property.pointsOfInterest = getPointOfInterest()
+
+        if (property.dateSell == null && status == 1) {
+            property.dateSell = Date().time
+        }
 
         if (idProperty == null) {
             editViewModel.addProperty(property, listPicString)
@@ -221,7 +229,7 @@ class AddActivity : CommonActivity()  {
         val restaurant = binding.addRestaurant.isChecked
         val park = binding.addPark.isChecked
 
-        return PointsOfInterest(school, market, park, restaurant, health, transport)
+        return PointsOfInterest(health, school, market, transport, restaurant, park)
     }
 
 
