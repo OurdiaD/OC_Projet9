@@ -11,6 +11,7 @@ import android.view.View.VISIBLE
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.database.PropertyRepository
 import com.openclassrooms.realestatemanager.databinding.ActivityAddBinding
 import com.openclassrooms.realestatemanager.model.Address
 import com.openclassrooms.realestatemanager.model.PointsOfInterest
@@ -52,6 +53,7 @@ class AddActivity : CommonActivity()  {
         binding.addProperty.setOnClickListener {
             saveData()
             finish()
+            PropertyRepository.getInstance(this)?.getQuery("SELECT * FROM property")
         }
 
         binding.addPicGallery.setOnClickListener {
