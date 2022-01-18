@@ -22,6 +22,13 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.databinding.FragmentMapBinding
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.Utils.isInternetAvailable
+import android.content.Intent
+import androidx.core.content.ContextCompat
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
+import com.google.android.gms.maps.model.Marker
+import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.ui.detailsProperty.DetailsPropertyActivity
+import com.openclassrooms.realestatemanager.ui.detailsProperty.DetailsPropertyFragment
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -74,8 +81,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 if (location != null) {
                     val loc = location.split(",")
                     val latlng = LatLng(loc[0].toDouble(), loc[1].toDouble())
-                    map.addMarker(MarkerOptions().position(latlng).title(Utils.getAddressToString(property.property.address)))
+                    map.addMarker(MarkerOptions().position(latlng).snippet(property.property.idProperty.toString()).title(Utils.getAddressToString(property.property.address)))
                 }
+                mMap.setOnMarkerClickListener(markerClickListner())
             }
 
             if (hasPermissions()) getCurrentLocation()
@@ -94,6 +102,26 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     .target(current).zoom(8f).bearing(90f).tilt(30f).build()
                 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(myPosition))
             }
+        }
+    }
+
+    fun markerClickListner(): OnMarkerClickListener? {
+        val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
+        return OnMarkerClickListener { marker: Marker ->
+            if (isTablet) {
+                val bundle = Bundle()
+                marker.snippet?.toLong()?.let { bundle.putLong("id_property", it) }
+                val fragment = DetailsPropertyFragment()
+                fragment.arguments = bundle
+                val transaction = activity?.supportFragmentManager?.beginTransaction()
+                transaction?.replace(R.id.frame_layout_detail, fragment)
+                transaction?.commit()
+            } else {
+                val intent = Intent(context, DetailsPropertyActivity::class.java)
+                intent.putExtra("id_property", marker.snippet?.toLong())
+                context?.let { ContextCompat.startActivity(it, intent, null) }
+            }
+            true
         }
     }
 
