@@ -1,10 +1,10 @@
-package com.openclassrooms.realestatemanager.ui.slideshow
+package com.openclassrooms.realestatemanager.ui.simulator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class SimulatorViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is slideshow Fragment"

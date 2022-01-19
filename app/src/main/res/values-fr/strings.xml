@@ -45,4 +45,5 @@
     <string name="soldSince">Vendu depuis</string>
     <string name="noNetwork">Activer votre connexion internet pour afficher les informations sur la carte</string>
     <string name="agentName">Nom de l\'agent</string>
+    <string name="simulator">Simulateur</string>
 </resources>
