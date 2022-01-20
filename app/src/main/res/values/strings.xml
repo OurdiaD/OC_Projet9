@@ -56,4 +56,11 @@
     <string name="noNetwork">Activate your internet connection to display the information on the map</string>
     <string name="agentName">Agent name</string>
     <string name="simulator">Simulator</string>
+    <string name="deposit">Deposit</string>
+    <string name="years">Years</string>
+    <string name="rate">Rate</string>
+    <string name="calculate">Calculate</string>
+    <string name="valByMonth">Price by month</string>
+    <string name="totalPrice">Total price</string>
+    <string name="ratePrice">Rate price</string>
 </resources>

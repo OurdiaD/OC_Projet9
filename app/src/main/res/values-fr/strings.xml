@@ -46,4 +46,11 @@
     <string name="noNetwork">Activer votre connexion internet pour afficher les informations sur la carte</string>
     <string name="agentName">Nom de l\'agent</string>
     <string name="simulator">Simulateur</string>
+    <string name="deposit">Apport</string>
+    <string name="years">Années</string>
+    <string name="rate">Taux</string>
+    <string name="calculate">Calculer</string>
+    <string name="valByMonth">Price by month</string>
+    <string name="totalPrice">Total price</string>
+    <string name="ratePrice">Rate price</string>
 </resources>

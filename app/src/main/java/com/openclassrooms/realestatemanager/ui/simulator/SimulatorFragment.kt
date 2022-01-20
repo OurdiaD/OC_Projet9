@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.openclassrooms.realestatemanager.databinding.FragmentSimulatorBinding
 import java.text.NumberFormat
+import kotlin.math.pow
 
 class SimulatorFragment : Fragment() {
 
@@ -46,23 +47,23 @@ class SimulatorFragment : Fragment() {
         _binding = null
     }
 
-    fun calculate() {
-        val amount = binding.amountEdit.text.toString().toFloat()
+    private fun calculate() {
+        var amount = binding.amountEdit.text.toString().toFloat()
+        val deposit = binding.depositEdit.text.toString().toFloat()
         val years = binding.yearsEdit.text.toString().toFloat()
         val rate = binding.rateEdit.text.toString().toFloat()
-        val rateAssure = binding.rateAssurEdit.text.toString().toFloat()
 
+        amount -= deposit
         val month = years * 12
-        val valRate = amount * (rate / 10)
-        val valAssure = amount * (rateAssure / 10)
-        val value = amount + valRate + valAssure
+        val tMonth = (rate/12)/100
+        val r = (1- ((1 + tMonth).toDouble()).pow((-month).toDouble())) /tMonth
+        val valByMonth = amount / r
 
-        val valByMonth = value / month
+        val value = (valByMonth * 12) * years
+        val ratePrice = value - amount
 
-        binding.monthPrice.text = valByMonth.toString()
-        binding.totalPrice.text = value.toString()
-        binding.ratePrice.text = valRate.toString()
-        binding.ratePriceAssure.text = valAssure.toString()
-
+        binding.monthPrice.text = valByMonth.toInt().toString()
+        binding.totalPrice.text = value.toInt().toString()
+        binding.ratePrice.text = ratePrice.toInt().toString()
     }
 }
