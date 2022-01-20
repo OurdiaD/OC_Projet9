@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.database
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -81,13 +80,6 @@ class PropertyRepository(context: Context) {
     fun deletePicture(id: Long, path: String){
         Executors.newSingleThreadExecutor().execute {
             pictureDao.deletePic(id, path)
-        }
-    }
-    fun delete(){
-        Log.d("lol prorepo", "delete")
-        Executors.newSingleThreadExecutor().execute {
-            Log.d("lol prorepo", "delete")
-            propertyDao.deleteAll()
         }
     }
 }

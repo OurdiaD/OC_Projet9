@@ -2,33 +2,32 @@ package com.openclassrooms.realestatemanager.ui.map
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.openclassrooms.realestatemanager.databinding.FragmentMapBinding
-import com.openclassrooms.realestatemanager.utils.Utils
-import com.openclassrooms.realestatemanager.utils.Utils.isInternetAvailable
-import android.content.Intent
-import androidx.core.content.ContextCompat
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.databinding.FragmentMapBinding
 import com.openclassrooms.realestatemanager.ui.detailsProperty.DetailsPropertyActivity
 import com.openclassrooms.realestatemanager.ui.detailsProperty.DetailsPropertyFragment
+import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.utils.Utils.isInternetAvailable
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -56,7 +55,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onResume() {
         super.onResume()
         isInternetAvailable(context).observe(viewLifecycleOwner, { success ->
-            Log.d("lol co", "" + success)
             if (success) {
                 binding.internetFail.visibility = View.GONE
                 mapFragment.getMapAsync(this)
@@ -105,7 +103,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    fun markerClickListner(): OnMarkerClickListener? {
+    private fun markerClickListner(): OnMarkerClickListener {
         val isTablet = requireContext().resources.getBoolean(R.bool.isTablet)
         return OnMarkerClickListener { marker: Marker ->
             if (isTablet) {

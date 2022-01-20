@@ -1,16 +1,11 @@
 package com.openclassrooms.realestatemanager.database
 
-import android.content.ContentValues
 import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.openclassrooms.realestatemanager.model.Property
 import com.openclassrooms.realestatemanager.model.PropertyAndPictures
-import androidx.room.Delete
-
-
-
 
 @Dao
 interface PropertyDao {

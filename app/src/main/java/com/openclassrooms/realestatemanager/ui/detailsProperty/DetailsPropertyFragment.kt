@@ -99,8 +99,8 @@ class DetailsPropertyFragment : Fragment() {
             View.GONE
     }
 
-    fun toogleCarrousel(list: List<Picture>) {
-        if(list.size > 0){
+    private fun toogleCarrousel(list: List<Picture>) {
+        if(list.isNotEmpty()){
             binding.carousel.visibility = View.VISIBLE
         } else {
             binding.carousel.visibility = View.GONE

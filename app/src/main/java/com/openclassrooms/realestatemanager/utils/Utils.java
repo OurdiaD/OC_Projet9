@@ -77,7 +77,6 @@ public class Utils {
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setConnectTimeout(10000);
                     connection.connect();
-                    Log.d("lol co", ""+connection.getResponseCode() );
                     success.postValue(connection.getResponseCode() == 200);
                 } catch (IOException e) {
                     e.printStackTrace();

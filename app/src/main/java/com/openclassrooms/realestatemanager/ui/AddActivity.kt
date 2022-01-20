@@ -204,7 +204,6 @@ class AddActivity : CommonActivity()  {
 
             override fun onLongClick(position: Int, carouselItem: CarouselItem) {
                 super.onLongClick(position, carouselItem)
-                Log.d("lol add", "longclick")
                 listPic.remove(carouselItem)
                 listPicString.remove(carouselItem.imageUrl)
                 if (idProperty != null){
@@ -215,7 +214,7 @@ class AddActivity : CommonActivity()  {
         }
     }
 
-    fun toogleCarrousel() {
+    private fun toogleCarrousel() {
         if(listPicString.size > 0){
             binding.carousel.visibility = VISIBLE
         } else {
@@ -223,7 +222,7 @@ class AddActivity : CommonActivity()  {
         }
     }
 
-    fun getPointOfInterest(): PointsOfInterest {
+    private fun getPointOfInterest(): PointsOfInterest {
         val health = binding.addHealth.isChecked
         val school = binding.addSchool.isChecked
         val market = binding.addMarket.isChecked

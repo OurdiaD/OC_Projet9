@@ -3,7 +3,6 @@ package com.openclassrooms.realestatemanager.providers
 import android.content.ContentProvider
 import android.content.ContentUris
 import android.content.ContentValues
-import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import com.openclassrooms.realestatemanager.database.REMDatabase
@@ -25,7 +24,7 @@ class ItemContentProvider: ContentProvider() {
     override fun query(uri: Uri, projection: Array<String>?,
                        selection: String?,
                        selectionArgs: Array<String>?,
-                       sortOrder: String?): Cursor? {
+                       sortOrder: String?): Cursor {
 
         if (context != null) {
             val mContext = context!!
@@ -38,11 +37,11 @@ class ItemContentProvider: ContentProvider() {
         throw IllegalArgumentException("Failed to query row for uri $uri")
     }
 
-    override fun getType(uri: Uri): String? {
+    override fun getType(uri: Uri): String {
         return "vnd.android.cursor.item/$AUTHORITY.$TABLE_NAME"
     }
 
-    override fun insert(uri: Uri, contentValues: ContentValues?): Uri? {
+    override fun insert(uri: Uri, contentValues: ContentValues?): Uri {
 
         if (context != null) {
             val mContext = context!!
@@ -61,7 +60,7 @@ class ItemContentProvider: ContentProvider() {
         if (context != null) {
             val mContext = context!!
             val db = REMDatabase.getInstance(mContext)
-            val count = db!!.propertyDao().delete(ContentUris.parseId(uri))
+            db!!.propertyDao().delete(ContentUris.parseId(uri))
             mContext.contentResolver.notifyChange(uri, null)
             return 0
         }
@@ -73,7 +72,7 @@ class ItemContentProvider: ContentProvider() {
         if (context != null) {
             val mContext = context!!
             val db = REMDatabase.getInstance(mContext)
-            val count = db!!.propertyDao().update(Property.fromContentValues(contentValues!!))
+            db!!.propertyDao().update(Property.fromContentValues(contentValues!!))
             mContext.contentResolver.notifyChange(uri, null)
             return 0
         }

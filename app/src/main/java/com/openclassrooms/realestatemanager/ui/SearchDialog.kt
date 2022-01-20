@@ -2,9 +2,7 @@ package com.openclassrooms.realestatemanager.ui
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.size
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
@@ -17,7 +15,7 @@ import java.util.*
 class SearchDialog : DialogFragment() {
 
     private lateinit var binding: DialogSearchBinding
-    var condition = false
+    private var condition = false
 
     companion object {
         var minPrice: String? = null
@@ -61,7 +59,7 @@ class SearchDialog : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    fun getParam(){
+    private fun getParam(){
         minPrice = binding.searchMinPriceEdit.text.toString()
         maxPrice = binding.searchMaxPriceEdit.text.toString()
         minSurface = binding.searchMinSurfaceEdit.text.toString()
@@ -97,12 +95,12 @@ class SearchDialog : DialogFragment() {
         if (condition) {
             baseQuery += " WHERE $query"
         }
-Log.d("lol query", baseQuery)
+
         context?.let { PropertyRepository.getInstance(it)?.getQuery(baseQuery) }
 
     }
 
-    fun putLastValues() {
+    private fun putLastValues() {
         binding.searchMinPriceEdit.setText(minPrice)
         binding.searchMaxPriceEdit.setText(maxPrice)
         binding.searchMinSurfaceEdit.setText(minSurface)
@@ -111,7 +109,7 @@ Log.d("lol query", baseQuery)
         binding.searchMaxRoomsEdit.setText(maxRoom)
     }
 
-    fun setInterests() {
+    private fun setInterests() {
         binding.searchHealth.isChecked = health
         binding.searchSchool.isChecked = school
         binding.searchMarket.isChecked = market
@@ -121,7 +119,7 @@ Log.d("lol query", baseQuery)
 
     }
 
-    fun initDate() {
+    private fun initDate() {
         binding.searchMinDateinEdit.setOnClickListener {
             datePicker(binding.searchMinDateinEdit)
         }
@@ -152,7 +150,7 @@ Log.d("lol query", baseQuery)
         }
     }
 
-    fun datePicker(input: TextInputEditText) {
+    private fun datePicker(input: TextInputEditText) {
         val datepicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText("Select Date")
             .build()
@@ -173,7 +171,7 @@ Log.d("lol query", baseQuery)
         }
     }
 
-    fun getQueryIntSupTo(field: String, value: String): String {
+    private fun getQueryIntSupTo(field: String, value: String): String {
         var query = ""
         if (value != ""){
             if (condition) query = " AND"
@@ -183,7 +181,7 @@ Log.d("lol query", baseQuery)
         return query
     }
 
-    fun getQueryIntInfTo(field: String, value: String): String {
+    private fun getQueryIntInfTo(field: String, value: String): String {
         var query = ""
         if (value != ""){
             if (condition) query = " AND"
@@ -193,7 +191,7 @@ Log.d("lol query", baseQuery)
         return query
     }
 
-    fun getQueryBool(field: String, value: Boolean): String {
+    private fun getQueryBool(field: String, value: Boolean): String {
         var query = ""
         if (value){
             if (condition) query = " AND"
@@ -203,7 +201,7 @@ Log.d("lol query", baseQuery)
         return query
     }
 
-    fun getQueryLongSupTo(field: String, value: Long): String {
+    private fun getQueryLongSupTo(field: String, value: Long): String {
         var query = ""
         if (value != 0L){
             if (condition) query = " AND"
@@ -213,7 +211,7 @@ Log.d("lol query", baseQuery)
         return query
     }
 
-    fun getQueryLongInfTo(field: String, value: Long): String {
+    private fun getQueryLongInfTo(field: String, value: Long): String {
         var query = ""
         if (value != 0L){
             if (condition) query = " AND"
