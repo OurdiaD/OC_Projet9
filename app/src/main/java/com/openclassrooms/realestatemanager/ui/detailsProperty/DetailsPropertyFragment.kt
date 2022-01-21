@@ -2,9 +2,7 @@ package com.openclassrooms.realestatemanager.ui.detailsProperty
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -26,12 +24,15 @@ class DetailsPropertyFragment : Fragment() {
     private lateinit var binding: FragmentDetailsPropertyBinding
     private var idProperty: Long? = null
     var fullscreen: Boolean = false
+    val list = mutableListOf<CarouselItem>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         detailsViewModel = ViewModelProvider(this)[DetailsViewModel::class.java]
         binding = FragmentDetailsPropertyBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        CarouselUtils().initCarousel(binding.carousel, activity)
+        binding.carousel.registerLifecycle(lifecycle)
+        //listnerCarousel()
+        CarouselUtils().initCarousel(binding.carousel, binding.carouselFullscreen, list)
         //listnerCarousel()
         getDetails()
         setHasOptionsMenu(true)
@@ -50,8 +51,8 @@ class DetailsPropertyFragment : Fragment() {
                 binding.detailsAgent.text = it.property.agent.toString()
 
                 toogleCarrousel(it.pictures)
-                binding.carousel.registerLifecycle(lifecycle)
-                val list = mutableListOf<CarouselItem>()
+                //binding.carousel.registerLifecycle(lifecycle)
+
                 for (pic in it.pictures) {
                     list.add(CarouselItem(imageUrl = pic.linkPic))
                 }
@@ -108,20 +109,39 @@ class DetailsPropertyFragment : Fragment() {
     }
 
     fun listnerCarousel() {
+        /*binding.carousel.carouselListener = object  : CarouselListener {
+            override fun onClick(position: Int, carouselItem: CarouselItem) {
+                super.onClick(position, carouselItem)
+                binding.carouselFullscreen.visibility = View.VISIBLE
+                carouselFullscreen()
+            }
+        }*/
         binding.carousel.carouselListener = object  : CarouselListener {
             override fun onClick(position: Int, carouselItem: CarouselItem) {
                 super.onClick(position, carouselItem)
-                Log.d("lol add", "click")
-                if(fullscreen) {
-                    binding.carousel.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, 400)
-                    fullscreen = false
-                } else {
-                    val mDisplay: Display = activity!!.windowManager.defaultDisplay
-                    val width: Int = mDisplay.width
-                    val height: Int = mDisplay.height
-                    binding.carousel.layoutParams = ConstraintLayout.LayoutParams(width, height)
-                    fullscreen = true
+                binding.carouselFullscreen.visibility = View.VISIBLE
+                carouselFullscreen()
+            }
+
+            override fun onLongClick(position: Int, carouselItem: CarouselItem) {
+                super.onLongClick(position, carouselItem)
+                /*listPic.remove(carouselItem)
+                listPicString.remove(carouselItem.imageUrl)
+                if (idProperty != null){
+                    editViewModel.deletePicture(idProperty!!, carouselItem.imageUrl.toString())
                 }
+                binding.carousel.setData(listPic)*/
+            }
+        }
+    }
+
+
+    fun carouselFullscreen() {
+        binding.carouselFullscreen.setData(list)
+        binding.carouselFullscreen.carouselListener = object  : CarouselListener {
+            override fun onClick(position: Int, carouselItem: CarouselItem) {
+                super.onClick(position, carouselItem)
+                binding.carouselFullscreen.visibility = View.GONE
             }
         }
     }

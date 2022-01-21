@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.content.FileProvider
@@ -36,7 +35,6 @@ class AddActivity : CommonActivity()  {
     private val listPic = mutableListOf<CarouselItem>()
     private val listPicString = mutableListOf<String>()
     private var datePic: String? = null
-    var fullscreen: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +63,7 @@ class AddActivity : CommonActivity()  {
         }
 
         binding.carousel.registerLifecycle(lifecycle)
-        CarouselUtils().initCarousel(binding.carousel, this)
+        CarouselUtils().initCarousel(binding.carousel, binding.carouselFullscreen, listPic)
         listnerCarousel()
     }
 
@@ -183,24 +181,13 @@ class AddActivity : CommonActivity()  {
         return path
     }
 
-    fun listnerCarousel() {
+    private fun listnerCarousel() {
         binding.carousel.carouselListener = object  : CarouselListener {
-            /*override fun onClick(position: Int, carouselItem: CarouselItem) {
+            override fun onClick(position: Int, carouselItem: CarouselItem) {
                 super.onClick(position, carouselItem)
-                Log.d("lol add", "click")
-                if(fullscreen) {
-                    binding.carousel.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, 400)
-                    binding.carousel.carouselType = CarouselType.SHOWCASE
-                    fullscreen = false
-                } else {
-                    val mDisplay: Display = windowManager.defaultDisplay
-                    val width: Int = mDisplay.width
-                    val height: Int = mDisplay.height
-                    binding.carousel.layoutParams = ConstraintLayout.LayoutParams(width, height)
-                    fullscreen = true
-                }
-
-            }*/
+                binding.carouselFullscreen.visibility = VISIBLE
+                carouselFullscreen()
+            }
 
             override fun onLongClick(position: Int, carouselItem: CarouselItem) {
                 super.onLongClick(position, carouselItem)
@@ -210,6 +197,16 @@ class AddActivity : CommonActivity()  {
                     editViewModel.deletePicture(idProperty!!, carouselItem.imageUrl.toString())
                 }
                 binding.carousel.setData(listPic)
+            }
+        }
+    }
+
+    fun carouselFullscreen() {
+        binding.carouselFullscreen.setData(listPic)
+        binding.carouselFullscreen.carouselListener = object  : CarouselListener {
+            override fun onClick(position: Int, carouselItem: CarouselItem) {
+                super.onClick(position, carouselItem)
+                binding.carouselFullscreen.visibility = GONE
             }
         }
     }
@@ -232,7 +229,6 @@ class AddActivity : CommonActivity()  {
 
         return PointsOfInterest(health, school, market, transport, restaurant, park)
     }
-
 
     private fun showPointsInterest(points: PointsOfInterest?) {
         if (points != null) {
