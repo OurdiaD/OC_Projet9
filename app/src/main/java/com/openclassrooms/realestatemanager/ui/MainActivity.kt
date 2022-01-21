@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -52,10 +51,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         R.id.action_add -> {
-            // User chose the "Favorite" action, mark the current item
-            // as a favorite...
-            Log.d("lol main", "add")
-
             startActivity(Intent(this, AddActivity::class.java))
             true
         }
