@@ -17,6 +17,9 @@ import com.openclassrooms.realestatemanager.utils.CarouselUtils
 import com.openclassrooms.realestatemanager.utils.Utils
 import org.imaginativeworld.whynotimagecarousel.listener.CarouselListener
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DetailsPropertyFragment : Fragment() {
 
@@ -31,9 +34,7 @@ class DetailsPropertyFragment : Fragment() {
         binding = FragmentDetailsPropertyBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.carousel.registerLifecycle(lifecycle)
-        //listnerCarousel()
         CarouselUtils().initCarousel(binding.carousel, binding.carouselFullscreen, list)
-        //listnerCarousel()
         getDetails()
         setHasOptionsMenu(true)
         return root
@@ -50,8 +51,23 @@ class DetailsPropertyFragment : Fragment() {
                 binding.detailsRooms.text = it.property.numberOfRooms.toString()
                 binding.detailsAgent.text = it.property.agent.toString()
 
+                val address = it.property.address?.number +" "+
+                        it.property.address?.street + " " +
+                        it.property.address?.postCode  + " " +
+                        it.property.address?.city
+
+                binding.detailsAddress.text = address
+
+
+                val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+                binding.detailsDateSell.text = dateFormat.format(it.property.dateIn)
+                if (it.property.dateSell != null)
+                    binding.detailsDateSold.text = dateFormat.format(it.property.dateSell)
+                else
+                    binding.detailsDateSold.text = getString(R.string.toSell)
+
+
                 toogleCarrousel(it.pictures)
-                //binding.carousel.registerLifecycle(lifecycle)
 
                 for (pic in it.pictures) {
                     list.add(CarouselItem(imageUrl = pic.linkPic))
@@ -105,44 +121,6 @@ class DetailsPropertyFragment : Fragment() {
             binding.carousel.visibility = View.VISIBLE
         } else {
             binding.carousel.visibility = View.GONE
-        }
-    }
-
-    fun listnerCarousel() {
-        /*binding.carousel.carouselListener = object  : CarouselListener {
-            override fun onClick(position: Int, carouselItem: CarouselItem) {
-                super.onClick(position, carouselItem)
-                binding.carouselFullscreen.visibility = View.VISIBLE
-                carouselFullscreen()
-            }
-        }*/
-        binding.carousel.carouselListener = object  : CarouselListener {
-            override fun onClick(position: Int, carouselItem: CarouselItem) {
-                super.onClick(position, carouselItem)
-                binding.carouselFullscreen.visibility = View.VISIBLE
-                carouselFullscreen()
-            }
-
-            override fun onLongClick(position: Int, carouselItem: CarouselItem) {
-                super.onLongClick(position, carouselItem)
-                /*listPic.remove(carouselItem)
-                listPicString.remove(carouselItem.imageUrl)
-                if (idProperty != null){
-                    editViewModel.deletePicture(idProperty!!, carouselItem.imageUrl.toString())
-                }
-                binding.carousel.setData(listPic)*/
-            }
-        }
-    }
-
-
-    fun carouselFullscreen() {
-        binding.carouselFullscreen.setData(list)
-        binding.carouselFullscreen.carouselListener = object  : CarouselListener {
-            override fun onClick(position: Int, carouselItem: CarouselItem) {
-                super.onClick(position, carouselItem)
-                binding.carouselFullscreen.visibility = View.GONE
-            }
         }
     }
 

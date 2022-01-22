@@ -50,7 +50,11 @@
     <string name="years">Années</string>
     <string name="rate">Taux</string>
     <string name="calculate">Calculer</string>
-    <string name="valByMonth">Price by month</string>
-    <string name="totalPrice">Total price</string>
+    <string name="valByMonth">Prix mensuel</string>
+    <string name="totalPrice">Prix Total</string>
     <string name="ratePrice">Rate price</string>
+    <string name="toSell">Toujours en vente</string>
+    <string name="date_sold">Date de vente</string>
+    <string name="date_sell">Date d\'entré</string>
+    <string name="address">Adresse</string>
 </resources>

@@ -63,4 +63,8 @@
     <string name="valByMonth">Price by month</string>
     <string name="totalPrice">Total price</string>
     <string name="ratePrice">Rate price</string>
+    <string name="toSell">To Sell</string>
+    <string name="date_sold">Date sold</string>
+    <string name="date_sell">Date sell</string>
+    <string name="address">Address</string>
 </resources>
