@@ -10,23 +10,22 @@ import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailsPropertyBinding
+import com.openclassrooms.realestatemanager.model.Address
 import com.openclassrooms.realestatemanager.model.Picture
 import com.openclassrooms.realestatemanager.model.PointsOfInterest
+import com.openclassrooms.realestatemanager.model.Property
 import com.openclassrooms.realestatemanager.ui.AddActivity
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
 import com.openclassrooms.realestatemanager.utils.Utils
-import org.imaginativeworld.whynotimagecarousel.listener.CarouselListener
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
 
 class DetailsPropertyFragment : Fragment() {
 
     private lateinit var detailsViewModel: DetailsViewModel
     private lateinit var binding: FragmentDetailsPropertyBinding
     private var idProperty: Long? = null
-    var fullscreen: Boolean = false
     val list = mutableListOf<CarouselItem>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -50,22 +49,8 @@ class DetailsPropertyFragment : Fragment() {
                 binding.detailsDescribe.text = it.property.describe.toString()
                 binding.detailsRooms.text = it.property.numberOfRooms.toString()
                 binding.detailsAgent.text = it.property.agent.toString()
-
-                val address = it.property.address?.number +" "+
-                        it.property.address?.street + " " +
-                        it.property.address?.postCode  + " " +
-                        it.property.address?.city
-
-                binding.detailsAddress.text = address
-
-
-                val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
-                binding.detailsDateSell.text = dateFormat.format(it.property.dateIn)
-                if (it.property.dateSell != null)
-                    binding.detailsDateSold.text = dateFormat.format(it.property.dateSell)
-                else
-                    binding.detailsDateSold.text = getString(R.string.toSell)
-
+                binding.detailsAddress.text = getAdress(it.property.address)
+                getDate(it.property)
 
                 toogleCarrousel(it.pictures)
 
@@ -74,25 +59,7 @@ class DetailsPropertyFragment : Fragment() {
                 }
                 binding.carousel.setData(list)
 
-
-                Utils.isInternetAvailable(context).observe(viewLifecycleOwner, { success ->
-                    if (success) {
-                        binding.detailsMap.visibility = View.VISIBLE
-                        binding.internetFail.visibility = View.GONE
-                        val location = Utils.getLocalisation(context,it.property.address)
-                        if (location != null) {
-                            val url = "https://maps.googleapis.com/maps/api/staticmap?center="+location+
-                                    "&zoom=15&size=300x300&maptype=roadmap&markers=color:red%7Clabel:C%7C" +location+
-                                    "&key=" + BuildConfig.API_KEY
-                            Glide.with(requireContext()).load(url).into(binding.detailsMap)
-                        }
-                    } else {
-                        binding.detailsMap.visibility = View.GONE
-                        binding.internetFail.visibility = View.VISIBLE
-                    }
-                })
-
-
+                getStaticMap(it.property.address)
                 getPointsInterest(it.property.pointsOfInterest)
             })
         }
@@ -136,5 +103,39 @@ class DetailsPropertyFragment : Fragment() {
             ContextCompat.startActivity(requireContext(), intent, null)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+
+    private fun getAdress(address: Address?): String{
+        return address?.number +" "+ address?.street + " " + address?.postCode  + " " + address?.city
+    }
+
+    private fun getDate(property: Property) {
+        val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+        binding.detailsDateSell.text = dateFormat.format(property.dateIn)
+        if (property.dateSell != null)
+            binding.detailsDateSold.text = dateFormat.format(property.dateSell)
+        else
+            binding.detailsDateSold.text = getString(R.string.toSell)
+    }
+
+    private fun getStaticMap(address: Address?) {
+
+        Utils.isInternetAvailable(context).observe(viewLifecycleOwner, { success ->
+            if (success) {
+                binding.detailsMap.visibility = View.VISIBLE
+                binding.internetFail.visibility = View.GONE
+                val location = Utils.getLocalisation(context, address)
+                if (location != null) {
+                    val url = "https://maps.googleapis.com/maps/api/staticmap?center="+location+
+                            "&zoom=15&size=300x300&maptype=roadmap&markers=color:red%7Clabel:C%7C" +location+
+                            "&key=" + BuildConfig.API_KEY
+                    Glide.with(requireContext()).load(url).into(binding.detailsMap)
+                }
+            } else {
+                binding.detailsMap.visibility = View.GONE
+                binding.internetFail.visibility = View.VISIBLE
+            }
+        })
     }
 }
