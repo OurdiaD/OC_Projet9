@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_add">Ajouter</string>
-    <string name="flat">Flat</string>
-    <string name="house">House</string>
+    <string name="flat">Appartement</string>
+    <string name="house">Maison</string>
     <string name="manor">Manoir</string>
     <string name="loft">Loft</string>
     <string name="duplex">Duplex</string>
-    <string name="land">Land</string>
+    <string name="land">Terrain</string>
     <string name="to_sale">A vendre</string>
     <string name="sold">Vendu</string>
     <string name="status">Status</string>
@@ -52,9 +52,11 @@
     <string name="calculate">Calculer</string>
     <string name="valByMonth">Prix mensuel</string>
     <string name="totalPrice">Prix Total</string>
-    <string name="ratePrice">Rate price</string>
+    <string name="ratePrice">Prix des interets</string>
     <string name="toSell">Toujours en vente</string>
     <string name="date_sold">Date de vente</string>
     <string name="date_sell">Date d\'entré</string>
     <string name="address">Adresse</string>
+    <string name="addProperty">Propriété ajoutée</string>
+    <string name="descAdd">Un bien vien d\'etre ajouté</string>
 </resources>

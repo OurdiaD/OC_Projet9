@@ -26,7 +26,7 @@ class MainActivityTest {
     @Test
     fun map_Open() {
         onView(withId(R.id.nav_map)).perform(click())
-        onView(withId(R.id.map)).check(ViewAssertions.matches(ViewMatchers.withId(R.id.map)))
+        onView(withId(R.id.map)).check(ViewAssertions.matches(withId(R.id.map)))
     }
 
     @Test

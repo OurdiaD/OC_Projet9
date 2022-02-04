@@ -1,17 +1,13 @@
 package com.openclassrooms.realestatemanager
 
-import android.content.Context
-//import androidx.test.core.app.ApplicationProvider
 import com.openclassrooms.realestatemanager.utils.Utils
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class UtilsTest {
-    //private val context: Context = ApplicationProvider.getApplicationContext()
 
     @Test
     fun convertDollarToEuroTest() {
@@ -32,12 +28,4 @@ class UtilsTest {
         val date = dateFormat.format(Date())
         assertEquals(date, value)
     }
-
-    /*@Test
-    fun isInternetTest() {
-        *//*val success = Utils.isInternetAvailable(context)
-        success.observeForever {
-            assertTrue(it)*//*
-        }
-    }*/
 }

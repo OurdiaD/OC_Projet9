@@ -67,4 +67,6 @@
     <string name="date_sold">Date sold</string>
     <string name="date_sell">Date sell</string>
     <string name="address">Address</string>
+    <string name="addProperty">Property added</string>
+    <string name="descAdd">A property just added</string>
 </resources>

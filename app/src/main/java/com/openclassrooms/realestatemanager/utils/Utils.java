@@ -60,9 +60,6 @@ public class Utils {
      * @return boolean
      */
     public static MutableLiveData<Boolean> isInternetAvailable(Context context) {
-        /*WifiManager wifi = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        return wifi.isWifiEnabled();*/
-
         MutableLiveData<Boolean> success = new MutableLiveData<>();
         success.setValue(false);
         Executors.newSingleThreadExecutor().execute(() -> {

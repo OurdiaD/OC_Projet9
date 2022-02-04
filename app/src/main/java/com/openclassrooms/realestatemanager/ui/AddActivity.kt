@@ -15,6 +15,7 @@ import com.openclassrooms.realestatemanager.databinding.ActivityAddBinding
 import com.openclassrooms.realestatemanager.model.Address
 import com.openclassrooms.realestatemanager.model.PointsOfInterest
 import com.openclassrooms.realestatemanager.model.Property
+import com.openclassrooms.realestatemanager.service.Notification
 import com.openclassrooms.realestatemanager.ui.editProperty.EditViewModel
 import com.openclassrooms.realestatemanager.utils.CarouselUtils
 import com.openclassrooms.realestatemanager.utils.Utils
@@ -131,6 +132,7 @@ class AddActivity : CommonActivity()  {
 
         if (idProperty == null) {
             editViewModel.addProperty(property, listPicString)
+            Notification(this).showNotification()
         } else {
             editViewModel.updateProperty(property, listPicString)
         }

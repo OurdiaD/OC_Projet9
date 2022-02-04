@@ -2,10 +2,8 @@ package com.openclassrooms.realestatemanager.utilsTest
 
 import android.view.View
 import androidx.test.espresso.UiController
-import androidx.test.espresso.matcher.ViewMatchers.isRoot
-
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import org.hamcrest.Matcher
 
 

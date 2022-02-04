@@ -28,9 +28,5 @@ class SimulatorViewModel : ViewModel() {
         valByMonthString = valByMonth.toInt().toString()
         valueString = value.toInt().toString()
         ratePriceString = ratePrice.toInt().toString()
-
-        /*binding.monthPrice.text = valByMonth.toInt().toString()
-        binding.totalPrice.text = value.toInt().toString()
-        binding.ratePrice.text = ratePrice.toInt().toString()*/
     }
 }

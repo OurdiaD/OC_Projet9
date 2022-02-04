@@ -9,7 +9,6 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.openclassrooms.realestatemanager.ui.AddActivity
 import com.openclassrooms.realestatemanager.ui.MainActivity
 import org.junit.Rule
 import org.junit.Test
@@ -24,7 +23,7 @@ class AddActivityTest {
         Espresso.onView(ViewMatchers.withId(R.id.price_property_edit)).perform(ViewActions.typeText("500"))
         Espresso.onView(ViewMatchers.withId(R.id.surface_property_edit)).perform(ViewActions.typeText("5"))
         Espresso.onView(ViewMatchers.withId(R.id.rooms_property_edit)).perform(ViewActions.typeText("5"))
-        Espresso.onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard())
+        Espresso.onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         Espresso.onView(ViewMatchers.withId(R.id.add_property)).perform(scrollTo()).perform(click())
         Espresso.onView(ViewMatchers.withId(R.id.list_property))
             .check(ViewAssertions.matches(ViewMatchers.hasChildCount(3)))

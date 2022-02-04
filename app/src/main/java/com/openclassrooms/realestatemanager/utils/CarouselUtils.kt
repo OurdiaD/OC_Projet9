@@ -34,14 +34,10 @@ class CarouselUtils {
                 val currentBinding = binding as ItemCarouselCustomBinding
 
                 currentBinding.imageView.apply {
-                    //scaleType = imageScaleType
-
-                    // carousel_default_placeholder is the default placeholder comes with
-                    // the library.
                     setImage(item, R.drawable.carousel_default_placeholder)
                 }
 
-                currentBinding.imageView.setOnClickListener(){
+                currentBinding.imageView.setOnClickListener{
                     carouselFS.visibility = View.VISIBLE
                     carouselFullscreen(carouselFS, list)
                 }

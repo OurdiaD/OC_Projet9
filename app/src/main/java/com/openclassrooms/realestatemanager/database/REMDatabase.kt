@@ -64,6 +64,7 @@ abstract class REMDatabase : RoomDatabase() {
            property2.describe = "description du bien immo2"
            property2.address = address2
            property2.agent = "nom de l'agent2"
+           property2.dateIn = 1642113918438
            property2.dateSell = 1642153918438
            property2.pointsOfInterest = PointsOfInterest(school = true, market = true, park = false)
 
