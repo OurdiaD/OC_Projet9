@@ -3,14 +3,12 @@ package com.openclassrooms.realestatemanager.service
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.res.Resources
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.openclassrooms.realestatemanager.R
 
-class Notification(context: Context) {
-    val context = context
+class Notification(val context: Context) {
     val addProperty = context.getString(R.string.addProperty)
     val descAdd = context.getString(R.string.descAdd)
 
