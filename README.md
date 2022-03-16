@@ -18,7 +18,7 @@ Cette application à été développer dans le cadre de la formation "Developpeu
 * Traduction français anglais
 * Tests
 
-## Tech et libs utilisé :
+## Tech et libs utilisées :
 * Kotlin
 * Room
 * Sqlite
